@@ -19,5 +19,15 @@
 *.tar.gz
 *.rar
 
+.idea
+.mvn
+HELP.md
+lena_cc_backend.iml
+target
+
+
+changName.sh
+reChangName.sh
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
