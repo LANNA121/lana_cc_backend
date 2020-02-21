@@ -29,6 +29,6 @@ public interface AccountDao {
      * @param userName 用户唯一账户
      * @return 查询到的用户信息
      */
-    @Select("select * from lana_account where username = #{userName}")
-    AccountPO selectAccountInfoByUserNameAndPassword(@Param("userName") String userName);
+    @Select("select * from lana_account where user_name = #{userName}")
+    AccountPO selectAccountInfoByUserName(@Param("userName") String userName);
 }
