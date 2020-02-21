@@ -22,14 +22,12 @@ public enum ResultCodeEnum {
     UNAUTHORIZED(2001),
     //用户名或密码错误
     USERNAME_OR_PASSWORD_ERROR(2002),
-    // 邮箱验证失败
-    EMAIL_VERIFY_ERROR(2003),
     // 账号已经存在
     ACCOUNT_ALWAYS_EXISTS(2004),
     // 未知错误
     UNKNOWN(2100),
-    // RPC ERROR
-    RPC_SVR_ERROR_ACCOUNT(2101)
+
+    NOT_FIND(404);
     ;
 
 
