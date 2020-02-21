@@ -6,4 +6,6 @@ package com.lana.cc.backend.service;
  * @date 2020/2/21 11:53
  */
 public interface AccountService {
+
+    void testConn();
 }
