@@ -1,5 +1,7 @@
 package com.lana.cc.backend.controller;
 
+import com.lana.cc.backend.annotation.Security;
+import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +22,20 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
+
+
+    @Security(roles = RoleEnum.LOG,checkToken = false)
     @GetMapping(value = "/testJson",produces  =  MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage testJsonResult(){
+        accountService.testConn();
         return ServiceResponseMessage.createBySuccessCodeMessage("Hello　Json", Arrays.asList("Hello Data"));
     }
 
 
+    @Security(roles = RoleEnum.USER)
     @GetMapping("/test")
-    public String testController(){
-        accountService.testConn();
-        return "Hello World";
+    public ServiceResponseMessage testController(){
+
+        return ServiceResponseMessage.createBySuccessCodeMessage("Hello　Json", Arrays.asList("Hello Data"));
     }
 }

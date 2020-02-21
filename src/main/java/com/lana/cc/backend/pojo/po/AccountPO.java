@@ -9,6 +9,7 @@ package com.lana.cc.backend.pojo.po;
  */
 public class AccountPO {
     private Integer uid;
+    private String role;
     private String userName;
     private String password;
     private Long birthday;
@@ -27,6 +28,14 @@ public class AccountPO {
 
     public void setUid(Integer uid) {
         this.uid = uid;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getUserName() {
@@ -119,8 +128,9 @@ public class AccountPO {
 
     @Override
     public String toString() {
-        return "Lana Account:{" +
+        return "AccountPO{" +
                 "uid=" + uid +
+                ", role='" + role + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", birthday=" + birthday +

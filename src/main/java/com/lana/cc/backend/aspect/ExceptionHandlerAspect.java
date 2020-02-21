@@ -1,4 +1,4 @@
-package com.lana.cc.backend.config;
+package com.lana.cc.backend.aspect;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import org.slf4j.Logger;
@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 
 @RestController
 @RestControllerAdvice
-public class ExceptionHandlerConfig implements ErrorController {
+public class ExceptionHandlerAspect implements ErrorController {
 
-    Logger logger = LoggerFactory.getLogger(ExceptionHandlerConfig.class);
+    Logger logger = LoggerFactory.getLogger(ExceptionHandlerAspect.class);
 
     private static final String ERROR_PATH = "/error";
 
