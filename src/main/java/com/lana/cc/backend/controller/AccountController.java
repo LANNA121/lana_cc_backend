@@ -3,11 +3,12 @@ package com.lana.cc.backend.controller;
 import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.LoginReq;
+import com.lana.cc.backend.pojo.vo.req.RegisterReq;
 import com.lana.cc.backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
@@ -18,17 +19,22 @@ import java.util.Arrays;
  */
 
 @RestController
+@RequestMapping(value = "/account", produces  =  MediaType.APPLICATION_JSON_VALUE)
 public class AccountController {
     @Autowired
     AccountService accountService;
 
-
+    @Security(roles = RoleEnum.LOG,checkToken = false)
+    @PostMapping(value = "/login",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage login(@RequestBody LoginReq loginReq){
+        return accountService.login(loginReq);
+    }
 
     @Security(roles = RoleEnum.LOG,checkToken = false)
-    @GetMapping(value = "/testJson",produces  =  MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage testJsonResult(){
-        accountService.testConn();
-        return ServiceResponseMessage.createBySuccessCodeMessage("Hello　Json", Arrays.asList("Hello Data"));
+    @PostMapping(value = "/register",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage signIn(@RequestBody RegisterReq registerReq){
+       // return accountService.signIn(loginReq);
+        return ServiceResponseMessage.createBySuccessCodeMessage("");
     }
 
 

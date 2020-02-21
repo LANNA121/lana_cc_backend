@@ -16,6 +16,8 @@ public enum ResultCodeEnum {
     ERROR_ACCOUNT(3002),
     //没有权限
     UNAUTHORIZED(3003),
+    //权限变更
+    UNAUTHORIZED_CHANGE(3004),
 
     //请求成功,伴随返回值
     SUCCESS(1000),
@@ -34,7 +36,6 @@ public enum ResultCodeEnum {
     UNKNOWN(2100),
 
     NOT_FIND(404);
-    ;
 
 
 

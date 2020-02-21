@@ -1,5 +1,8 @@
 package com.lana.cc.backend.service;
 
+import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.LoginReq;
+
 /**
  * @author LANA
  * @version 1.0
@@ -7,5 +10,11 @@ package com.lana.cc.backend.service;
  */
 public interface AccountService {
 
-    void testConn();
+    /**
+     * 用户的登录请求
+     *
+     * @param loginReq 包含用户账号和用户密码
+     * @return 登陆的返回结果
+     */
+    ServiceResponseMessage login(LoginReq loginReq);
 }

@@ -64,6 +64,9 @@ public class SecurityAspect {
                 if(!JWTUtil.verify(token,accountInfo.getPassword())){
                     return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ERROR_TOKEN, "TOKEN错误");
                 }
+                if(HttpUtil.getRole() != RoleEnum.getRole(accountInfo.getRole())){
+                    return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.UNAUTHORIZED_CHANGE, "权限变更");
+                }
             }else {
                 // 用户不存在 返回用户不存在
                 return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ERROR_ACCOUNT, "用户不存在");

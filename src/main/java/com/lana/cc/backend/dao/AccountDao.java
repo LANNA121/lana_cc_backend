@@ -22,4 +22,13 @@ public interface AccountDao {
      */
     @Select("select * from lana_account where uid = #{uid}")
     AccountPO selectAccountInfoByUid(@Param("uid") Integer uid);
+
+    /**
+     * 根据用户唯一账户名登录和密码查询用户
+     *
+     * @param userName 用户唯一账户
+     * @return 查询到的用户信息
+     */
+    @Select("select * from lana_account where username = #{userName}")
+    AccountPO selectAccountInfoByUserNameAndPassword(@Param("userName") String userName);
 }
