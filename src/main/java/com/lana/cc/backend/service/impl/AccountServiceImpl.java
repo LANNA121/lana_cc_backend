@@ -40,14 +40,23 @@ public class AccountServiceImpl implements AccountService {
                     RoleEnum.getRole(accountInfo.getRole()), accountInfo.getPassword()));
             return ServiceResponseMessage.createBySuccessCodeMessage("登录成功", loginRsp);
         }
-        return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR,"密码错误");
+        return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR, "密码错误");
     }
 
     @Override
     public ServiceResponseMessage signIn(RegisterReq registerReq) {
-        AccountPO accountInfo = new AccountPO();
-        BeanUtils.copyProperties(registerReq,accountInfo);
-        accountInfo.setCreateTime(System.currentTimeMillis());
-        return ServiceResponseMessage.createBySuccessCodeMessage("转换成功",accountInfo);
+        AccountPO accountInfo = accountDao.selectAccountInfoByUserName(registerReq.getUserName());
+        if (accountInfo != null) {
+            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ACCOUNT_ALWAYS_EXISTS, "账号已存在");
+        } else {
+            accountInfo = new AccountPO();
+            BeanUtils.copyProperties(registerReq, accountInfo);
+            accountInfo.setCreateTime(System.currentTimeMillis());
+            if (accountDao.insertNewLanaAccount(accountInfo) == 1) {
+                return ServiceResponseMessage.createBySuccessCodeMessage("注册成功", "你好! " + accountInfo.getNikeName());
+            } else {
+                return ServiceResponseMessage.createByFailCodeMessage("注册失败");
+            }
+        }
     }
 }

@@ -8,10 +8,8 @@ package com.lana.cc.backend.pojo.vo.req;
 public class RegisterReq {
     private String userName;
     private String password;
-    private Long birthday;
     private String nikeName;
     private String gender;
-    private String signature;
     private String avatar;
     private String role;
 
@@ -31,14 +29,6 @@ public class RegisterReq {
         this.password = password;
     }
 
-    public Long getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Long birthday) {
-        this.birthday = birthday;
-    }
-
     public String getNikeName() {
         return nikeName;
     }
@@ -53,14 +43,6 @@ public class RegisterReq {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
     }
 
     public String getAvatar() {
