@@ -33,8 +33,7 @@ public class AccountController {
     @Security(roles = RoleEnum.LOG,checkToken = false)
     @PostMapping(value = "/register",produces  =  MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage signIn(@RequestBody RegisterReq registerReq){
-       // return accountService.signIn(loginReq);
-        return ServiceResponseMessage.createBySuccessCodeMessage("");
+       return accountService.signIn(registerReq);
     }
 
 

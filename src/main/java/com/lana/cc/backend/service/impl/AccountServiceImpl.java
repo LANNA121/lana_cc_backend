@@ -6,9 +6,11 @@ import com.lana.cc.backend.pojo.po.AccountPO;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
+import com.lana.cc.backend.pojo.vo.req.RegisterReq;
 import com.lana.cc.backend.pojo.vo.rsp.LoginRsp;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.utils.JWTUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,5 +41,13 @@ public class AccountServiceImpl implements AccountService {
             return ServiceResponseMessage.createBySuccessCodeMessage("登录成功", loginRsp);
         }
         return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR,"密码错误");
+    }
+
+    @Override
+    public ServiceResponseMessage signIn(RegisterReq registerReq) {
+        AccountPO accountInfo = new AccountPO();
+        BeanUtils.copyProperties(registerReq,accountInfo);
+        accountInfo.setCreateTime(System.currentTimeMillis());
+        return ServiceResponseMessage.createBySuccessCodeMessage("转换成功",accountInfo);
     }
 }

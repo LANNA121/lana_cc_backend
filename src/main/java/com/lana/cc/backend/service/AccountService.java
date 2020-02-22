@@ -2,6 +2,7 @@ package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
+import com.lana.cc.backend.pojo.vo.req.RegisterReq;
 
 /**
  * @author LANA
@@ -17,4 +18,12 @@ public interface AccountService {
      * @return 登陆的返回结果
      */
     ServiceResponseMessage login(LoginReq loginReq);
+
+    /**
+     * 用户的在注册接口
+     *
+     * @param registerReq 注册需要的信息接口
+     * @return 注册的登录结果
+     */
+    ServiceResponseMessage signIn(RegisterReq registerReq);
 }

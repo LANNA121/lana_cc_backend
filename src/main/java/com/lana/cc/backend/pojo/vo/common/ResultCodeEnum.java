@@ -8,16 +8,7 @@ package com.lana.cc.backend.pojo.vo.common;
  * @date 2019/7/27 11:06
  */
 public enum ResultCodeEnum {
-    // 未登录
-    NOT_LOGIN(3000),
-    // 错误的密钥
-    ERROR_TOKEN(3001),
-    // 账户不存在
-    ERROR_ACCOUNT(3002),
-    //没有权限
-    UNAUTHORIZED(3003),
-    //权限变更
-    UNAUTHORIZED_CHANGE(3004),
+
 
     //请求成功,伴随返回值
     SUCCESS(1000),
@@ -32,6 +23,21 @@ public enum ResultCodeEnum {
     USERNAME_OR_PASSWORD_ERROR(2002),
     // 账号已经存在
     ACCOUNT_ALWAYS_EXISTS(2004),
+    // 未登录
+    NOT_LOGIN(2005),
+    // 错误的密钥
+    ERROR_TOKEN(2006),
+    // 账户不存在
+    ERROR_ACCOUNT(2007),
+    //没有权限
+    UNAUTHORIZED(2008),
+    //权限变更
+    UNAUTHORIZED_CHANGE(2009),
+    //图片为空
+    IMAGE_NULL(2010),
+
+
+
     // 未知错误
     UNKNOWN(2100),
 
