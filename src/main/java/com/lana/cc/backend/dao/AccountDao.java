@@ -75,7 +75,7 @@ public interface AccountDao {
      * @param signature 用户个性签名
      * @param uid 用户UID
      */
-    @Update("update lana_account set signature = #{signature} where uid = #{uid}")
+    @Update("update lana_account set `signature` = #{signature} where uid = #{uid}")
     void updateProfileSignatureByUid(@Param("signature") String signature,@Param("uid") Integer uid);
 
     /**

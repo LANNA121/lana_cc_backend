@@ -4,6 +4,7 @@ import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
+import com.lana.cc.backend.pojo.vo.req.UserProfileReq;
 
 /**
  * @author LANA
@@ -35,4 +36,21 @@ public interface AccountService {
      * @return 修改用户Profile信息
      */
     ServiceResponseMessage modifyProfile(ModifyProfileReq modifyProfileReq);
+
+    /**
+     * 通过用户UID查询用户Profile信息
+     *
+     * @param uid 用户UID
+     * @return 用户Profile的查询结果
+     */
+    ServiceResponseMessage fetchProfileByUid(Integer uid);
+
+
+    /**
+     * 通过用户UID查询用户Profile信息
+     *
+     * @param uid 用户UID
+     * @return 用户Profile的查询结果
+     */
+    UserProfileReq fetchUserProfileByUid(Integer uid);
 }

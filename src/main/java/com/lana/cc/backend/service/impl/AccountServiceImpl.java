@@ -8,6 +8,7 @@ import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
+import com.lana.cc.backend.pojo.vo.req.UserProfileReq;
 import com.lana.cc.backend.pojo.vo.rsp.LoginRsp;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.utils.HttpUtil;
@@ -29,11 +30,10 @@ public class AccountServiceImpl implements AccountService {
     @Resource
     AccountDao accountDao;
 
-
     @Override
     public ServiceResponseMessage login(LoginReq loginReq) {
         AccountPO accountInfo = accountDao.selectAccountInfoByUserName(loginReq.getUserName());
-        if (null == accountInfo) {
+        if (null == accountInfo || !accountInfo.getRole().equalsIgnoreCase(loginReq.getRole())) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ERROR_ACCOUNT, "账户不存在");
         }
         if (accountInfo.getPassword().equals(loginReq.getPassword())) {
@@ -63,24 +63,49 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-
     @Override
     public ServiceResponseMessage modifyProfile(ModifyProfileReq modifyProfileReq) {
         if (null == modifyProfileReq) {
-            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.PARAMETER_IS_EMPTY,"修改的对象为空");
+            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.PARAMETER_IS_EMPTY, "修改的对象为空");
         }
-        if(ObjectUtil.isNotEmpty(modifyProfileReq.getAvatar())){
+        if (ObjectUtil.isNotEmpty(modifyProfileReq.getAvatar())) {
             accountDao.updateProfileAvatarByUid(modifyProfileReq.getAvatar(), HttpUtil.getUserUid());
         }
-        if(ObjectUtil.isNotEmpty(modifyProfileReq.getNikeName())){
+        if (ObjectUtil.isNotEmpty(modifyProfileReq.getNikeName())) {
             accountDao.updateProfileNikeNameByUid(modifyProfileReq.getNikeName(), HttpUtil.getUserUid());
         }
-        if(ObjectUtil.isNotEmpty(modifyProfileReq.getSignature())){
+        if (ObjectUtil.isNotEmpty(modifyProfileReq.getSignature())) {
             accountDao.updateProfileSignatureByUid(modifyProfileReq.getSignature(), HttpUtil.getUserUid());
         }
-        if(ObjectUtil.isNotEmpty(modifyProfileReq.getBirthday())){
+        if (ObjectUtil.isNotEmpty(modifyProfileReq.getBirthday())) {
             accountDao.updateProfileBirthdayByUid(modifyProfileReq.getBirthday(), HttpUtil.getUserUid());
         }
-        return ServiceResponseMessage.createBySuccessCodeMessage("修改成功");
+        return ServiceResponseMessage.createBySuccessCodeMessage("修改成功","");
+    }
+
+    @Override
+    public ServiceResponseMessage fetchProfileByUid(Integer uid) {
+        UserProfileReq userProfileReq = fetchUserProfileByUid(uid);
+        if (null == userProfileReq) {
+            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ERROR_ACCOUNT, "账户不存在");
+        } else {
+            return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", userProfileReq);
+        }
+    }
+
+    @Override
+    public UserProfileReq fetchUserProfileByUid(Integer uid) {
+        if (uid == null || 0 == uid) {
+            uid = HttpUtil.getUserUid();
+        }
+        AccountPO accountInfo = accountDao.selectAccountInfoByUid(uid);
+        if (null == accountInfo) {
+            return null;
+        } else {
+            UserProfileReq userProfileReq = new UserProfileReq();
+            BeanUtils.copyProperties(accountInfo, userProfileReq);
+            userProfileReq.setCoins(100L);
+            return userProfileReq;
+        }
     }
 }

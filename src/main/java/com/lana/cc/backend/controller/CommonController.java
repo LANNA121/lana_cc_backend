@@ -24,12 +24,11 @@ public class CommonController {
 
     @ResponseBody
     @PostMapping(value = "/upload")
-    @Security(roles = RoleEnum.LOG,checkToken = false)
+    @Security(roles = RoleEnum.ALL,checkToken = false)
     public ServiceResponseMessage upload(@RequestParam("imageFile") MultipartFile imageFile) {
         if (imageFile.isEmpty()) {
             ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.IMAGE_IS_EMPTY, "图片不存在");
         }
         return commonService.uploadMultipartFile(imageFile);
-
     }
 }

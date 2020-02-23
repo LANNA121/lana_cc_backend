@@ -11,9 +11,7 @@ public enum RoleEnum {
     //普通用户
     USER("USER"),
     //登录权限
-    LOG("LOG"),
-    //所有用户
-    ALL("ALL");
+    ALL("LOG");
 
     private String role;
 

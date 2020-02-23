@@ -75,7 +75,7 @@ public class SecurityAspect {
         // 获取用户权限身份
         RoleEnum[] roles = security.roles();
         if (roles.length > 0) {
-            if (roles[0] == RoleEnum.LOG) {
+            if (roles[0] == RoleEnum.ALL){
                 // 安全限制标识是登录 直接返回原方法的调用
                 return proceedingJoinPoint.proceed();
             }

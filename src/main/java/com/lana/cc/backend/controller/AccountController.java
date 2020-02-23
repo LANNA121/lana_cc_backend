@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-
 /**
  * @author LANA
  * @version 1.0
@@ -25,21 +23,29 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @Security(roles = RoleEnum.LOG,checkToken = false)
+    @Security(roles = RoleEnum.ALL,checkToken = false)
     @PostMapping(value = "/login",produces  =  MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage login(@RequestBody LoginReq loginReq){
         return accountService.login(loginReq);
     }
 
-    @Security(roles = RoleEnum.LOG,checkToken = false)
+    @Security(roles = RoleEnum.ALL,checkToken = false)
     @PostMapping(value = "/register",produces  =  MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage signIn(@RequestBody RegisterReq registerReq){
        return accountService.signIn(registerReq);
     }
 
     @Security(roles = {RoleEnum.USER,RoleEnum.OSS},checkToken = false)
-    @PostMapping(value = "/modify",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/modify",produces  =  MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage modifyProfile(@RequestBody ModifyProfileReq modifyProfileReq){
         return accountService.modifyProfile(modifyProfileReq);
     }
+
+    @Security(roles = {RoleEnum.USER,RoleEnum.OSS},checkToken = false)
+    @GetMapping(value = "/profile",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchProfileByUid(@RequestParam("uid") Integer uid){
+        return accountService.fetchProfileByUid(uid);
+    }
+
+
 }
