@@ -6,10 +6,13 @@ import com.lana.cc.backend.pojo.po.AccountPO;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
+import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
 import com.lana.cc.backend.pojo.vo.rsp.LoginRsp;
 import com.lana.cc.backend.service.AccountService;
+import com.lana.cc.backend.utils.HttpUtil;
 import com.lana.cc.backend.utils.JWTUtil;
+import com.lana.cc.backend.utils.ObjectUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -58,5 +61,26 @@ public class AccountServiceImpl implements AccountService {
                 return ServiceResponseMessage.createByFailCodeMessage("注册失败");
             }
         }
+    }
+
+
+    @Override
+    public ServiceResponseMessage modifyProfile(ModifyProfileReq modifyProfileReq) {
+        if (null == modifyProfileReq) {
+            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.PARAMETER_IS_EMPTY,"修改的对象为空");
+        }
+        if(ObjectUtil.isNotEmpty(modifyProfileReq.getAvatar())){
+            accountDao.updateProfileAvatarByUid(modifyProfileReq.getAvatar(), HttpUtil.getUserUid());
+        }
+        if(ObjectUtil.isNotEmpty(modifyProfileReq.getNikeName())){
+            accountDao.updateProfileNikeNameByUid(modifyProfileReq.getNikeName(), HttpUtil.getUserUid());
+        }
+        if(ObjectUtil.isNotEmpty(modifyProfileReq.getSignature())){
+            accountDao.updateProfileSignatureByUid(modifyProfileReq.getSignature(), HttpUtil.getUserUid());
+        }
+        if(ObjectUtil.isNotEmpty(modifyProfileReq.getBirthday())){
+            accountDao.updateProfileBirthdayByUid(modifyProfileReq.getBirthday(), HttpUtil.getUserUid());
+        }
+        return ServiceResponseMessage.createBySuccessCodeMessage("修改成功");
     }
 }

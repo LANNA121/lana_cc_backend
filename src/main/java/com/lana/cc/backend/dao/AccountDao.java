@@ -1,10 +1,7 @@
 package com.lana.cc.backend.dao;
 
 import com.lana.cc.backend.pojo.po.AccountPO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 /**
  * @author LANA
@@ -51,4 +48,42 @@ public interface AccountDao {
             "#{accountInfo.createTime},#{accountInfo.createTime}" +
             ")")
     int insertNewLanaAccount(@Param("accountInfo") AccountPO accountInfo);
+
+    /**
+     * 更新用户头像
+     *
+     * @param avatar 用户头像
+     * @param uid 用户UID
+     */
+
+    @Update("update lana_account set avatar = #{avatar} where uid = #{uid}")
+    void updateProfileAvatarByUid(@Param("avatar") String avatar, @Param("uid") Integer uid);
+
+    /**
+     * 修改NikeName名字
+     *
+     * @param nikeName 用户昵称
+     * @param uid 用户uid
+     */
+    @Update("update lana_account set nike_name = #{nikeName} where uid = #{uid}")
+    void updateProfileNikeNameByUid(@Param("nikeName") String nikeName,@Param("uid") Integer uid);
+
+
+    /**
+     * 根据用户uid修改用户签名
+     *
+     * @param signature 用户个性签名
+     * @param uid 用户UID
+     */
+    @Update("update lana_account set signature = #{signature} where uid = #{uid}")
+    void updateProfileSignatureByUid(@Param("signature") String signature,@Param("uid") Integer uid);
+
+    /**
+     * 根据用户uid修改用户生日
+     *
+     * @param birthday 用户生日的时间戳
+     * @param uid 用户UID
+     */
+    @Update("update lana_account set birthday = #{birthday} where uid = #{uid}")
+    void updateProfileBirthdayByUid(@Param("birthday") Long birthday, @Param("uid") Integer uid);
 }

@@ -2,6 +2,7 @@ package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
+import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
 
 /**
@@ -26,4 +27,12 @@ public interface AccountService {
      * @return 注册的登录结果
      */
     ServiceResponseMessage signIn(RegisterReq registerReq);
+
+    /**
+     * 修改用户Profile信息的结构
+     *
+     * @param modifyProfileReq 修改用户Profile信息
+     * @return 修改用户Profile信息
+     */
+    ServiceResponseMessage modifyProfile(ModifyProfileReq modifyProfileReq);
 }

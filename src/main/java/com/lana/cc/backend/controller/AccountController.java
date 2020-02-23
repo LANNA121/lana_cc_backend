@@ -4,6 +4,7 @@ import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
+import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
 import com.lana.cc.backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,9 @@ public class AccountController {
        return accountService.signIn(registerReq);
     }
 
-
-    @Security(roles = RoleEnum.USER)
-    @GetMapping("/test")
-    public ServiceResponseMessage testController(){
-
-        return ServiceResponseMessage.createBySuccessCodeMessage("Hello　Json", Arrays.asList("Hello Data"));
+    @Security(roles = {RoleEnum.USER,RoleEnum.OSS},checkToken = false)
+    @PostMapping(value = "/modify",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage modifyProfile(@RequestBody ModifyProfileReq modifyProfileReq){
+        return accountService.modifyProfile(modifyProfileReq);
     }
 }

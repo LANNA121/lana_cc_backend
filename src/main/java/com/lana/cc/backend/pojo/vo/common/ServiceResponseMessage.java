@@ -20,7 +20,7 @@ public class ServiceResponseMessage implements Serializable {
     private Meta meta;
 
     @JsonProperty
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private Object data;
 
     /**

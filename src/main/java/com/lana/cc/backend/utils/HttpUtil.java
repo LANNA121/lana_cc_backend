@@ -43,8 +43,8 @@ public class HttpUtil {
      * 获取用户Uin
      * @return 用户Uin
      */
-    public static Integer getUserUin(){
-        return JWTUtil.getUin(getUserToken());
+    public static Integer getUserUid(){
+        return JWTUtil.getUid(getUserToken());
     }
 
     /**

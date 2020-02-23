@@ -87,7 +87,7 @@ public class JWTUtil {
      * @param token Token
      * @return java.lang.Long
      */
-    public static Integer getUin(String token) {
+    public static Integer getUid(String token) {
         try {
             if(null == token || "".equals(token)) return 0;
             DecodedJWT jwt = JWT.decode(token);

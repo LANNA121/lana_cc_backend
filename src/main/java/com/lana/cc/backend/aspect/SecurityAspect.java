@@ -51,7 +51,7 @@ public class SecurityAspect {
         if (security.checkToken()) {
             // 获取用户的Token
             String token = HttpUtil.getUserToken();
-            int uid = HttpUtil.getUserUin();
+            int uid = HttpUtil.getUserUid();
             if(null == token ||  "".equals(token) || uid == 0){
                 // 获取用户的Token失败,返回提示用户需要首先登录
                 return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.NOT_LOGIN, "请先登录");

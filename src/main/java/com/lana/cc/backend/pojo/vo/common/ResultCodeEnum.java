@@ -34,9 +34,9 @@ public enum ResultCodeEnum {
     //权限变更
     UNAUTHORIZED_CHANGE(2009),
     //图片为空
-    IMAGE_NULL(2010),
-
-
+    IMAGE_IS_EMPTY(2010),
+    //参数为空
+    PARAMETER_IS_EMPTY(2011),
 
     // 未知错误
     UNKNOWN(2100),
