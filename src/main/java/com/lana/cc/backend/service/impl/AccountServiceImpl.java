@@ -8,7 +8,7 @@ import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
-import com.lana.cc.backend.pojo.vo.req.UserProfileReq;
+import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 import com.lana.cc.backend.pojo.vo.rsp.LoginRsp;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.utils.HttpUtil;
@@ -85,16 +85,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ServiceResponseMessage fetchProfileByUid(Integer uid) {
-        UserProfileReq userProfileReq = fetchUserProfileByUid(uid);
-        if (null == userProfileReq) {
+        UserProfileRsp userProfileRsp = fetchUserProfileByUid(uid);
+        if (null == userProfileRsp) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ERROR_ACCOUNT, "账户不存在");
         } else {
-            return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", userProfileReq);
+            return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", userProfileRsp);
         }
     }
 
     @Override
-    public UserProfileReq fetchUserProfileByUid(Integer uid) {
+    public UserProfileRsp fetchUserProfileByUid(Integer uid) {
         if (uid == null || 0 == uid) {
             uid = HttpUtil.getUserUid();
         }
@@ -102,10 +102,10 @@ public class AccountServiceImpl implements AccountService {
         if (null == accountInfo) {
             return null;
         } else {
-            UserProfileReq userProfileReq = new UserProfileReq();
-            BeanUtils.copyProperties(accountInfo, userProfileReq);
-            userProfileReq.setCoins(100L);
-            return userProfileReq;
+            UserProfileRsp userProfileRsp = new UserProfileRsp();
+            BeanUtils.copyProperties(accountInfo, userProfileRsp);
+            userProfileRsp.setCoins(100L);
+            return userProfileRsp;
         }
     }
 }

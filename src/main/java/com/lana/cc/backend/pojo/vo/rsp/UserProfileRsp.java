@@ -1,11 +1,11 @@
-package com.lana.cc.backend.pojo.vo.req;
+package com.lana.cc.backend.pojo.vo.rsp;
 
 /**
  * @author Leo Wang
  * @version 1.0
  * @date 2020/2/23 16:03
  */
-public class UserProfileReq {
+public class UserProfileRsp {
     private Integer uid;
     private String role;
     private Long coins;

@@ -29,7 +29,7 @@ public class NewsController {
     }
 
     @Security(roles = RoleEnum.OSS)
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage postNewsDetail(@RequestBody NewsDetailReq newsDetailReq) {
         return newsService.fetchAllNews();
     }

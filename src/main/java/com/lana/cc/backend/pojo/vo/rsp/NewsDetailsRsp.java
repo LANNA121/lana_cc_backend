@@ -1,7 +1,5 @@
 package com.lana.cc.backend.pojo.vo.rsp;
 
-import com.lana.cc.backend.pojo.vo.req.UserProfileReq;
-
 import java.util.List;
 
 /**
@@ -37,8 +35,9 @@ public class NewsDetailsRsp {
         private String image;
         private int top;
         private long createTime;
-        private UserProfileReq userProfileReq;
+        private UserProfileRsp userProfileRsp;
         private int status;
+
 
         public int getId() {
             return id;
@@ -80,12 +79,12 @@ public class NewsDetailsRsp {
             this.createTime = createTime;
         }
 
-        public UserProfileReq getUserProfileReq() {
-            return userProfileReq;
+        public UserProfileRsp getUserProfileRsp() {
+            return userProfileRsp;
         }
 
-        public void setUserProfileReq(UserProfileReq userProfileReq) {
-            this.userProfileReq = userProfileReq;
+        public void setUserProfileRsp(UserProfileRsp userProfileRsp) {
+            this.userProfileRsp = userProfileRsp;
         }
 
         public int getStatus() {

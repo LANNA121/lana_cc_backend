@@ -4,7 +4,7 @@ import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
-import com.lana.cc.backend.pojo.vo.req.UserProfileReq;
+import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 
 /**
  * @author LANA
@@ -52,5 +52,5 @@ public interface AccountService {
      * @param uid 用户UID
      * @return 用户Profile的查询结果
      */
-    UserProfileReq fetchUserProfileByUid(Integer uid);
+    UserProfileRsp fetchUserProfileByUid(Integer uid);
 }

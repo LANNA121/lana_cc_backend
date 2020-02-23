@@ -4,6 +4,7 @@ import com.lana.cc.backend.dao.NewsDao;
 import com.lana.cc.backend.pojo.po.NewsPO;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.rsp.NewsDetailsRsp;
+import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.service.NewsService;
 import org.springframework.beans.BeanUtils;
@@ -33,23 +34,22 @@ public class NewsServiceImpl implements NewsService {
         List<NewsPO> commonList = newsDao.selectAllCommonNewsDetailInfo();
         List<NewsDetailsRsp.News> topNewsDetailsNewsList = new ArrayList<>();
         List<NewsDetailsRsp.News> commentNewsDetailsNewsList = new ArrayList<>();
-        if(null != topNewsList){
-            topNewsList.forEach(news -> {
-                NewsDetailsRsp.News rspNews = new NewsDetailsRsp.News();
-                BeanUtils.copyProperties(news,rspNews);
-                topNewsDetailsNewsList.add(rspNews);
-            });
-        }
+        buildNewsDetails(topNewsList, topNewsDetailsNewsList);
+        buildNewsDetails(commonList, commentNewsDetailsNewsList);
+        newsDetailsRsp.setNewsList(commentNewsDetailsNewsList);
+        newsDetailsRsp.setTopNewsList(topNewsDetailsNewsList);
+        return ServiceResponseMessage.createBySuccessCodeMessage("拉取成功",newsDetailsRsp);
+    }
+
+    private void buildNewsDetails(List<NewsPO> commonList, List<NewsDetailsRsp.News> commentNewsDetailsNewsList) {
         if(null != commonList){
             commonList.forEach(news -> {
                 NewsDetailsRsp.News rspNews = new NewsDetailsRsp.News();
                 BeanUtils.copyProperties(news,rspNews);
-                rspNews.setUserProfileReq(accountService.fetchUserProfileByUid(news.getCreateBy()));
+                UserProfileRsp userProfileRsp = accountService.fetchUserProfileByUid(news.getCreateBy());
+                rspNews.setUserProfileRsp(userProfileRsp == null ? new UserProfileRsp() : userProfileRsp);
                 commentNewsDetailsNewsList.add(rspNews);
             });
         }
-        newsDetailsRsp.setNewsList(commentNewsDetailsNewsList);
-        newsDetailsRsp.setTopNewsList(topNewsDetailsNewsList);
-        return ServiceResponseMessage.createBySuccessCodeMessage("拉取成功",newsDetailsRsp);
     }
 }
