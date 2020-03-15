@@ -5,10 +5,16 @@ import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.service.CommonService;
+import com.lana.cc.backend.service.GarbageSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author LANA
@@ -21,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class CommonController {
     @Autowired
     CommonService commonService;
+    @Autowired
+    GarbageSearchService garbageSearchService;
 
     @ResponseBody
     @PostMapping(value = "/upload")
@@ -30,5 +38,17 @@ public class CommonController {
             ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.IMAGE_IS_EMPTY, "图片不存在");
         }
         return commonService.uploadMultipartFile(imageFile);
+    }
+    @ResponseBody
+    @Security(roles = RoleEnum.ALL,checkToken = false)
+    @GetMapping(value = "/tools/{searchKey}/search",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage searchGarbageClassByKey(@PathVariable @NotBlank String searchKey){
+        return garbageSearchService.searchGarbageClassByKey(searchKey);
+    }
+    @ResponseBody
+    @Security(roles = RoleEnum.ALL,checkToken = false)
+    @GetMapping(value = "/tools/{classNum}/categories",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage searchGarbageCategoriesByNum(@PathVariable @Min(1) @Max(4) Integer classNum){
+        return garbageSearchService.searchGarbageCategoriesByNum(classNum);
     }
 }

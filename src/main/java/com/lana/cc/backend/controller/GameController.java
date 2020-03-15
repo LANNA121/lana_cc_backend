@@ -7,7 +7,6 @@ import com.lana.cc.backend.service.GameService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -24,7 +23,7 @@ public class GameController {
     @Resource
     GameService gameService;
 
-    @Security(roles = {RoleEnum.ALL},checkToken = false)
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER},checkToken = false)
     @GetMapping(value = "/question",produces  =  MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchRandomGameProblem(){
         return gameService.fetchRandomGameProblem();
