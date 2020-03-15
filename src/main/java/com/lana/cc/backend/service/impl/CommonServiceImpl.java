@@ -1,6 +1,5 @@
 package com.lana.cc.backend.service.impl;
 
-import com.lana.cc.backend.aspect.ExceptionHandlerAspect;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.rsp.UploadImageRsp;
 import com.lana.cc.backend.service.CommonService;

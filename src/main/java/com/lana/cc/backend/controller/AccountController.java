@@ -46,6 +46,4 @@ public class AccountController {
     public ServiceResponseMessage fetchProfileByUid(@RequestParam("uid") Integer uid){
         return accountService.fetchProfileByUid(uid);
     }
-
-
 }

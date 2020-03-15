@@ -7,10 +7,8 @@ package com.lana.cc.backend.pojo.vo.rsp;
  */
 public class UserProfileRsp {
     private Integer uid;
-    private String role;
     private Long coins;
     private String userName;
-    private String password;
     private Long birthday;
     private String nikeName;
     private String gender;
@@ -29,28 +27,12 @@ public class UserProfileRsp {
         this.uid = uid;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getUserName() {
         return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Long getBirthday() {
