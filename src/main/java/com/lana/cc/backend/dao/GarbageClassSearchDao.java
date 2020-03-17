@@ -3,6 +3,7 @@ package com.lana.cc.backend.dao;
 import com.lana.cc.backend.pojo.po.GarbageCategoriesPO;
 import com.lana.cc.backend.pojo.po.GarbageClassSearchPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface GarbageClassSearchDao {
     @Select(" select name, sortId\n" +
             "        from lana_garbage_search\n" +
             "        where name like concat('%', #{searchKey}, '%');")
-    List<GarbageClassSearchPO> selectGarbageClassByLikeSearchKey(String searchKey);
+    List<GarbageClassSearchPO> selectGarbageClassByLikeSearchKey(@Param("searchKey") String searchKey);
 
     @Select(" select id,\n" +
             "               color,\n" +
