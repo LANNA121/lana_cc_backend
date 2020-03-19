@@ -1,23 +1,31 @@
 package com.lana.cc.backend.service.impl;
 
 import com.lana.cc.backend.dao.AccountDao;
+import com.lana.cc.backend.dao.AddressDao;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
+import com.lana.cc.backend.pojo.po.AccountAddressPO;
 import com.lana.cc.backend.pojo.po.AccountPO;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.AddressReq;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
+import com.lana.cc.backend.pojo.vo.rsp.AddressRsp;
 import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 import com.lana.cc.backend.pojo.vo.rsp.LoginRsp;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.utils.HttpUtil;
 import com.lana.cc.backend.utils.JWTUtil;
 import com.lana.cc.backend.utils.ObjectUtil;
+import javafx.print.Collation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author LANA
@@ -29,6 +37,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Resource
     AccountDao accountDao;
+    @Resource
+    AddressDao addressDao;
 
     @Override
     public ServiceResponseMessage login(LoginReq loginReq) {
@@ -41,6 +51,7 @@ public class AccountServiceImpl implements AccountService {
             loginRsp.setUid(accountInfo.getUid());
             loginRsp.setToken(JWTUtil.createToken(accountInfo.getUid(),
                     RoleEnum.getRole(accountInfo.getRole()), accountInfo.getPassword()));
+            loginRsp.setRole(accountInfo.getRole());
             return ServiceResponseMessage.createBySuccessCodeMessage("登录成功", loginRsp);
         }
         return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.USERNAME_OR_PASSWORD_ERROR, "密码错误");
@@ -80,7 +91,7 @@ public class AccountServiceImpl implements AccountService {
         if (ObjectUtil.isNotEmpty(modifyProfileReq.getBirthday())) {
             accountDao.updateProfileBirthdayByUid(modifyProfileReq.getBirthday(), HttpUtil.getUserUid());
         }
-        return ServiceResponseMessage.createBySuccessCodeMessage("修改成功","");
+        return ServiceResponseMessage.createBySuccessCodeMessage("修改成功", "");
     }
 
     @Override
@@ -107,5 +118,53 @@ public class AccountServiceImpl implements AccountService {
             userProfileRsp.setCoins(100L);
             return userProfileRsp;
         }
+    }
+
+    @Override
+    public ServiceResponseMessage fetchAllAddressByUid(Integer uid) {
+        if (uid == null || 0 == uid) {
+            uid = HttpUtil.getUserUid();
+        }
+        AddressRsp addressRsp = new AddressRsp();
+        List<AccountAddressPO> accountAddressList = addressDao.selectAccountAddressByUid(uid);
+        if(null == accountAddressList){
+            return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", addressRsp);
+        }
+        List<AddressRsp.Address> addressList = new ArrayList<>();
+        for (AccountAddressPO accountAddressInfo : accountAddressList) {
+            AddressRsp.Address address = new AddressRsp.Address();
+            BeanUtils.copyProperties(accountAddressInfo, address);
+            addressList.add(address);
+        }
+        addressRsp.setAddressList(addressList);
+        return ServiceResponseMessage.createBySuccessCodeMessage("获取成功",addressRsp);
+    }
+
+    @Override
+    public ServiceResponseMessage createNewAddress(AddressReq addressReq) {
+        if(null != addressReq){
+            AccountAddressPO accountAddressEntity = new AccountAddressPO();
+            BeanUtils.copyProperties(addressReq,accountAddressEntity);
+            accountAddressEntity.setUid(HttpUtil.getUserUid());
+            addressDao.insertNewAddress(accountAddressEntity);
+            return ServiceResponseMessage.createBySuccessCodeMessage("获取成功","");
+        }
+        return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.BAD_REQUEST,"");
+    }
+
+
+    @Override
+    public ServiceResponseMessage deleteAddressByIdAndUid(int addressId, Integer uid) {
+        if(null != uid &&  uid != 0 ){
+            if(!uid.equals(HttpUtil.getUserUid())){
+                return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.UNAUTHORIZED,"权限限制");
+            }else {
+                uid = HttpUtil.getUserUid();
+            }
+        } else {
+            uid = HttpUtil.getUserUid();
+        }
+        addressDao.deleteAddressByIdAndUid(addressId,uid);
+        return ServiceResponseMessage.createBySuccessCodeMessage("删除成功","");
     }
 }

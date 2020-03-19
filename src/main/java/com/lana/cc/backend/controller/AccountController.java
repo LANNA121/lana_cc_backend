@@ -3,6 +3,7 @@ package com.lana.cc.backend.controller;
 import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.AddressReq;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
@@ -18,32 +19,52 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping(value = "/account", produces  =  MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/account", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @Security(roles = RoleEnum.ALL,checkToken = false)
-    @PostMapping(value = "/login",produces  =  MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage login(@RequestBody LoginReq loginReq){
+    @Security(roles = RoleEnum.ALL, checkToken = false)
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage login(@RequestBody LoginReq loginReq) {
         return accountService.login(loginReq);
     }
 
-    @Security(roles = RoleEnum.ALL,checkToken = false)
-    @PostMapping(value = "/register",produces  =  MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage signIn(@RequestBody RegisterReq registerReq){
-       return accountService.signIn(registerReq);
+    @Security(roles = RoleEnum.ALL, checkToken = false)
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage signIn(@RequestBody RegisterReq registerReq) {
+        return accountService.signIn(registerReq);
     }
 
-    @Security(roles = {RoleEnum.USER,RoleEnum.OSS},checkToken = false)
-    @PutMapping(value = "/modify",produces  =  MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage modifyProfile(@RequestBody ModifyProfileReq modifyProfileReq){
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @PutMapping(value = "/modify", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage modifyProfile(@RequestBody ModifyProfileReq modifyProfileReq) {
         return accountService.modifyProfile(modifyProfileReq);
     }
 
-    @Security(roles = {RoleEnum.USER,RoleEnum.OSS},checkToken = false)
-    @GetMapping(value = "/profile",produces  =  MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage fetchProfileByUid(@RequestParam("uid") Integer uid){
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @GetMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchProfileByUid(@RequestParam(value = "uid",required = false) Integer uid) {
         return accountService.fetchProfileByUid(uid);
     }
+
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @GetMapping(value = "/address", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchAllAddressByUid(@RequestParam(value = "uid",required = false) Integer uid) {
+        return accountService.fetchAllAddressByUid(uid);
+    }
+
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @PostMapping(value = "/address", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage postNewAddress(@RequestBody AddressReq addressReq) {
+        return accountService.createNewAddress(addressReq);
+    }
+
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @DeleteMapping(value = "/address", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage deleteAddressByIdAndUid(@RequestParam(value = "addressId",defaultValue = "0") int addressId, @RequestParam(value = "uid",required = false) Integer uid) {
+        return accountService.deleteAddressByIdAndUid(addressId,uid);
+    }
+
+
 }

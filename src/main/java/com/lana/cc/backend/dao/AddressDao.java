@@ -1,9 +1,7 @@
 package com.lana.cc.backend.dao;
 
 import com.lana.cc.backend.pojo.po.AccountAddressPO;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -24,4 +22,23 @@ public interface AddressDao {
      */
     @Select("select * from lana_account_addr where uid = #{uid}")
     List<AccountAddressPO> selectAccountAddressByUid(@Param("uid") int uid);
+
+    /**
+     * 创建新的地址信息
+     *
+     * @param addressEntity 用户地址相关信息
+     */
+
+    @Insert("insert into lana_account_addr(uid, name, phone, address, house, status) " +
+            "VALUES(#{addressEntity.uid},#{addressEntity.name},#{addressEntity.phone},#{addressEntity.address},#{addressEntity.house},0) ")
+    void insertNewAddress(@Param("addressEntity") AccountAddressPO addressEntity);
+
+    /**
+     * 根据用户地址信息和用户Uid删除地址相关信息
+     *
+     * @param addressId 用户地址信息
+     * @param uid       用户uid
+     */
+    @Delete("delete from lana_account_addr where id=#{addressId} and uid = #{uid}")
+    void deleteAddressByIdAndUid(@Param("addressId") int addressId, @Param("uid") Integer uid);
 }

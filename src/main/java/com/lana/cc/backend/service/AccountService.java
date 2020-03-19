@@ -1,6 +1,7 @@
 package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.AddressReq;
 import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
@@ -53,4 +54,29 @@ public interface AccountService {
      * @return 用户Profile的查询结果
      */
     UserProfileRsp fetchUserProfileByUid(Integer uid);
+
+    /**
+     * 根据UIN查询用户地址信息
+     *
+     * @param uid 用户UIN
+     * @return 用户地址信息
+     */
+    ServiceResponseMessage fetchAllAddressByUid(Integer uid);
+
+    /**
+     * 新增自己的邮件地址
+     *
+     * @param addressReq 地址请求
+     * @return 新增地址的处理结果
+     */
+    ServiceResponseMessage createNewAddress(AddressReq addressReq);
+
+    /**
+     * 删除用户地址信息通过地址ID和用户Uid
+     *
+     * @param addressId 用户地址ID
+     * @param uid 用户Uid
+     * @return 删除地址信息的处理结果
+     */
+    ServiceResponseMessage deleteAddressByIdAndUid(int addressId, Integer uid);
 }

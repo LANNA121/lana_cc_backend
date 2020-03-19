@@ -8,6 +8,7 @@ package com.lana.cc.backend.pojo.vo.rsp;
 public class LoginRsp {
     private Integer uid;
     private String token;
+    private String role;
 
     public Integer getUid() {
         return uid;
@@ -23,5 +24,13 @@ public class LoginRsp {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
