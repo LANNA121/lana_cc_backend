@@ -3,11 +3,10 @@ package com.lana.cc.backend.controller;
 import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.RedeemPointsReq;
 import com.lana.cc.backend.service.GameService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -28,4 +27,12 @@ public class GameController {
     public ServiceResponseMessage fetchRandomGameProblem(){
         return gameService.fetchRandomGameProblem();
     }
+
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER},checkToken = false)
+    @PostMapping(value = "/redeem",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage redeemPoints(@RequestBody RedeemPointsReq redeemPointsReq){
+        return gameService.redeemPoints(redeemPointsReq);
+    }
+
+
 }

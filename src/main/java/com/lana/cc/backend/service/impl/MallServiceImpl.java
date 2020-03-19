@@ -6,7 +6,6 @@ import com.lana.cc.backend.service.MallService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
 /**
  * @author LANA
  * @version 1.0

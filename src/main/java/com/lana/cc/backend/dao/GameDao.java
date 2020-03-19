@@ -23,4 +23,6 @@ public interface GameDao {
      */
     @Select("select * from lana_garbage_search order by rand() LIMIT #{limitSize}")
     List<GarbageSearchPO> selectRandomGameProblem(@Param("limitSize") int limitSize);
+
+
 }

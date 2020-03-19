@@ -3,8 +3,11 @@ package com.lana.cc.backend.service.impl;
 import com.lana.cc.backend.dao.GameDao;
 import com.lana.cc.backend.pojo.po.GarbageSearchPO;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.RedeemPointsReq;
 import com.lana.cc.backend.pojo.vo.rsp.GarbageQuestionRsp;
 import com.lana.cc.backend.service.GameService;
+import com.lana.cc.backend.utils.HttpUtil;
+import com.lana.cc.backend.utils.Md5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,5 +41,17 @@ public class GameServiceImpl implements GameService {
             garbageQuestionRsp.setQuestionList(questions);
         }
         return ServiceResponseMessage.createBySuccessCodeMessage(garbageQuestionRsp);
+    }
+
+    @Override
+    public ServiceResponseMessage redeemPoints(RedeemPointsReq redeemPointsReq) {
+        if(null != redeemPointsReq && redeemPointsReq.getCheckKey().equals(
+                Md5Util.encodeByMd5(
+                        redeemPointsReq.getLanaId(),
+                        String.format("%s%s",redeemPointsReq.getPoint(),redeemPointsReq.getSource()),HttpUtil.getUserUid()))
+        ){
+            // 增加兑换记录
+        }
+        return null;
     }
 }

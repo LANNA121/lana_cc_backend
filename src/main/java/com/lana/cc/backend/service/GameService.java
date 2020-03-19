@@ -1,6 +1,7 @@
 package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.RedeemPointsReq;
 
 /**
  * @author LANA
@@ -14,4 +15,12 @@ public interface GameService {
      * @return 垃圾分类问题的服务器返回值
      */
     ServiceResponseMessage fetchRandomGameProblem();
+
+    /**
+     * 获取积分的请求参数
+     *
+     * @param redeemPointsReq 兑换积分请求
+     * @return 兑换的请求结果
+     */
+    ServiceResponseMessage redeemPoints(RedeemPointsReq redeemPointsReq);
 }
