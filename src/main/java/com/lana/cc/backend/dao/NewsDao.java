@@ -2,6 +2,7 @@ package com.lana.cc.backend.dao;
 
 import com.lana.cc.backend.pojo.po.NewsPO;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -51,4 +52,41 @@ public interface NewsDao {
 
     @Delete("delete from lana_news where id = #{newsId}")
     void deleteNewsDetailByNewsId(@Param("newsId") int newsId);
+
+    /**
+     * 更新News的封面图
+     *
+     * @param newsId newsId
+     * @param image  news封面图片的Id
+     */
+    @Update("update lana_news set image = #{image} where id = #{newsId} limit 1")
+    void updateNewsImageByNewsId(@Param("newsId") int newsId, @Param("image") String image);
+
+    /**
+     * 更新News的跳转链接
+     *
+     * @param newsId  NewsId
+     * @param newsUrl news的Url
+     */
+    @Update("update lana_news set news_url = #{newsUrl} where id = #{newsId} limit 1")
+    void updateNewsUrlByNewsId(@Param("newsId") int newsId, @Param("newsUrl") String newsUrl);
+
+    /**
+     * 更新News Title
+     *
+     * @param newsId NewsId
+     * @param title NewsTitle
+     */
+    @Update("update lana_news set title = #{title} where id = #{newsId} limit 1")
+    void updateNewsTitleByNewsId(@Param("newsId") int newsId, @Param("title") String title);
+
+    /**
+     * 更新NewsTop
+     *
+     * @param newsId NewsId
+     * @param top NewsTopID
+     */
+
+    @Update("update lana_news set top = #{top} where id = #{newsId} limit 1")
+    void updateNewsTopByNewsId(int newsId, int top);
 }

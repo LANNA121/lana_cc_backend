@@ -1,6 +1,7 @@
 package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.ModifyNewsDetailReq;
 import com.lana.cc.backend.pojo.vo.req.NewsDetailReq;
 
 /**
@@ -32,4 +33,12 @@ public interface NewsService {
      * @return 删除新闻信息的处理结果
      */
     ServiceResponseMessage deleteNewsDetailByNewsId(int newsId);
+
+    /**
+     * 修改News的详细信息
+     *
+     * @param newsDetailReq News需要修改的信息的详细请求
+     * @return News修改处理后的结果
+     */
+    ServiceResponseMessage modifyNewsDetailByNewsId(ModifyNewsDetailReq newsDetailReq);
 }

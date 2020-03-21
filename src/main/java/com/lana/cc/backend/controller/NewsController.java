@@ -3,6 +3,7 @@ package com.lana.cc.backend.controller;
 import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.ModifyNewsDetailReq;
 import com.lana.cc.backend.pojo.vo.req.NewsDetailReq;
 import com.lana.cc.backend.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class NewsController {
         return newsService.deleteNewsDetailByNewsId(newsId);
     }
 
+    @Security(roles = RoleEnum.OSS)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage modifyNewsDetailByNewsId(@RequestBody ModifyNewsDetailReq modifyNewsDetailReq) {
+        return newsService.modifyNewsDetailByNewsId(modifyNewsDetailReq);
+    }
 
 }

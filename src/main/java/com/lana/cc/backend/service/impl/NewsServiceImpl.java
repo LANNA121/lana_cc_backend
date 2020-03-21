@@ -2,13 +2,16 @@ package com.lana.cc.backend.service.impl;
 
 import com.lana.cc.backend.dao.NewsDao;
 import com.lana.cc.backend.pojo.po.NewsPO;
+import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.ModifyNewsDetailReq;
 import com.lana.cc.backend.pojo.vo.req.NewsDetailReq;
 import com.lana.cc.backend.pojo.vo.rsp.NewsDetailsRsp;
 import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.service.NewsService;
 import com.lana.cc.backend.utils.HttpUtil;
+import com.lana.cc.backend.utils.ObjectUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +59,26 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public ServiceResponseMessage deleteNewsDetailByNewsId(int newsId) {
         newsDao.deleteNewsDetailByNewsId(newsId);
+        return ServiceResponseMessage.createBySuccessCodeMessage("删除成功");
+    }
+
+    @Override
+    public ServiceResponseMessage modifyNewsDetailByNewsId(ModifyNewsDetailReq newsDetailReq) {
+        if(null == newsDetailReq || newsDetailReq.getNewsId() == 0){
+            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.PARAMETER_IS_EMPTY,"NewsId无效不存在");
+        }
+        if(ObjectUtil.isNotEmpty(newsDetailReq.getImage())){
+            newsDao.updateNewsImageByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getImage());
+        }
+        if(ObjectUtil.isNotEmpty(newsDetailReq.getNewsUrl())){
+            newsDao.updateNewsUrlByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getNewsUrl());
+        }
+        if(ObjectUtil.isNotEmpty(newsDetailReq.getTitle())){
+            newsDao.updateNewsTitleByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getTitle());
+        }
+        if(ObjectUtil.isNotEmpty(newsDetailReq.getTop())){
+            newsDao.updateNewsTopByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getTop());
+        }
         return ServiceResponseMessage.createBySuccessCodeMessage("删除成功");
     }
 

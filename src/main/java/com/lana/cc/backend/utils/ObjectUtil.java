@@ -16,4 +16,8 @@ public class ObjectUtil {
     public static boolean isNotEmpty(Long longObj) {
         return longObj != null && 0 != longObj;
     }
+
+    public static boolean isNotEmpty(Integer intObj) {
+            return intObj != null && 0 != intObj;
+    }
 }
