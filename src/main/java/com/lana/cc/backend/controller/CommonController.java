@@ -51,4 +51,5 @@ public class CommonController {
     public ServiceResponseMessage searchGarbageCategoriesByNum(@PathVariable @Min(1) @Max(4) Integer classNum){
         return garbageSearchService.searchGarbageCategoriesByNum(classNum);
     }
+
 }

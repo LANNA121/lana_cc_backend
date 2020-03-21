@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ServiceResponseMessage login(LoginReq loginReq) {
         AccountPO accountInfo = accountDao.selectAccountInfoByUserName(loginReq.getUserName());
-        if (null == accountInfo || !accountInfo.getRole().equalsIgnoreCase(loginReq.getRole())) {
+        if (null == accountInfo) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ERROR_ACCOUNT, "账户不存在");
         }
         if (accountInfo.getPassword().equals(loginReq.getPassword())) {

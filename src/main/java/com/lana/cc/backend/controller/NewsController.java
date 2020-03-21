@@ -36,7 +36,7 @@ public class NewsController {
     }
 
     @Security(roles = RoleEnum.OSS)
-    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage deleteNewsDetailByNewsId(@RequestParam("newsId") int newsId) {
         return newsService.deleteNewsDetailByNewsId(newsId);
     }
