@@ -1,6 +1,7 @@
 package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.GoodsDetailReq;
 
 /**
  * @author LANA
@@ -16,4 +17,12 @@ public interface MallService {
      * @return 查询成功的结果返回
      */
     ServiceResponseMessage fetchAllEnableGoodsDetails();
+
+    /**
+     * 创建新的Goods商品信息
+     *
+     * @param goodsDetailReq 商品详细信息
+     * @return 创建的结果
+     */
+    ServiceResponseMessage createNewGoods(GoodsDetailReq goodsDetailReq);
 }
