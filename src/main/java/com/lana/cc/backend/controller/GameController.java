@@ -28,11 +28,4 @@ public class GameController {
         return gameService.fetchRandomGameProblem();
     }
 
-    @Security(roles = {RoleEnum.OSS,RoleEnum.USER},checkToken = false)
-    @PostMapping(value = "/redeem",produces  =  MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage redeemPoints(@RequestBody RedeemPointsReq redeemPointsReq){
-        return gameService.redeemPoints(redeemPointsReq);
-    }
-
-
 }

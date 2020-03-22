@@ -1,7 +1,9 @@
 package com.lana.cc.backend.service.impl;
 
+import com.lana.cc.backend.dao.AccountBookDao;
 import com.lana.cc.backend.dao.GameDao;
 import com.lana.cc.backend.pojo.po.GarbageSearchPO;
+import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.RedeemPointsReq;
 import com.lana.cc.backend.pojo.vo.rsp.GarbageQuestionRsp;
@@ -24,6 +26,10 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
     @Resource
     GameDao gameDao;
+
+    @Resource
+    AccountBookDao accountBookDao;
+
 
 
     @Override
@@ -51,7 +57,9 @@ public class GameServiceImpl implements GameService {
                         String.format("%s%s",redeemPointsReq.getPoint(),redeemPointsReq.getSource()),HttpUtil.getUserUid()))
         ){
             // 增加兑换记录
+            accountBookDao.insertAccountBookAchieve(HttpUtil.getUserUid(),redeemPointsReq.getLanaId(),redeemPointsReq.getPoint(),String.format("%s 兑换",redeemPointsReq.getSource()));
+            return ServiceResponseMessage.createBySuccessCodeMessage("兑换成功");
         }
-        return null;
+        return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.BAD_REQUEST,"兑换失败");
     }
 }
