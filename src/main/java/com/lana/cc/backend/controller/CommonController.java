@@ -4,6 +4,7 @@ import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.CategoriesReq;
 import com.lana.cc.backend.service.CommonService;
 import com.lana.cc.backend.service.GarbageSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,20 @@ public class CommonController {
     @GetMapping(value = "/tools/{classNum}/categories",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage searchGarbageCategoriesByNum(@PathVariable @Min(1) @Max(4) Integer classNum){
         return garbageSearchService.searchGarbageCategoriesByNum(classNum);
+    }
+
+    @ResponseBody
+    @Security(roles = RoleEnum.OSS)
+    @PutMapping(value = "/tools/categories",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage modifyClassCategories(@RequestParam("classKey")String classKey,@RequestParam("classNum") @Min(1) @Max(4) Integer classNum){
+        return garbageSearchService.modifyClassCategories(classKey,classNum);
+    }
+
+    @ResponseBody
+    @Security(roles = RoleEnum.OSS)
+    @PostMapping(value = "/tools/categories",consumes =MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage postClassCategories(CategoriesReq categoriesReq){
+        return garbageSearchService.postClassCategories(categoriesReq);
     }
 
 }

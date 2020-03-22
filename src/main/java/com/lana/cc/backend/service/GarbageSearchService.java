@@ -1,6 +1,7 @@
 package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.CategoriesReq;
 
 /**
  * @author LANA
@@ -24,4 +25,21 @@ public interface GarbageSearchService {
      * @return 详细的垃圾分类信息
      */
     ServiceResponseMessage searchGarbageCategoriesByNum(Integer classNum);
+
+    /**
+     * 修改自动分类的分类信息
+     *
+     * @param classKey 分类的商品Key
+     * @param classNum 分类需要
+     * @return 修改的商品分类信息
+     */
+    ServiceResponseMessage modifyClassCategories(String classKey, Integer classNum);
+
+    /**
+     * 创建增加新的分类属性信息
+     *
+     * @param categoriesReq 分类相关信息
+     * @return 增加后的处理结果
+     */
+    ServiceResponseMessage postClassCategories(CategoriesReq categoriesReq);
 }

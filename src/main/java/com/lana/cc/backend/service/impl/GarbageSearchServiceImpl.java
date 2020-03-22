@@ -4,6 +4,7 @@ import com.lana.cc.backend.dao.GarbageClassSearchDao;
 import com.lana.cc.backend.pojo.po.GarbageCategoriesPO;
 import com.lana.cc.backend.pojo.po.GarbageClassSearchPO;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
+import com.lana.cc.backend.pojo.vo.req.CategoriesReq;
 import com.lana.cc.backend.pojo.vo.rsp.GarbageClassResp;
 import com.lana.cc.backend.service.GarbageSearchService;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,17 @@ public class GarbageSearchServiceImpl implements GarbageSearchService {
             return ServiceResponseMessage.createBySuccessCodeMessage(garbageCategories);
         }
         return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
+
+    @Override
+    public ServiceResponseMessage modifyClassCategories(String classKey, Integer classNum) {
+        garbageClassSearchDao.updateClassCategoriesByKeyAndClassNum(classKey,classNum);
+        return ServiceResponseMessage.createBySuccessCodeMessage("修改成功");
+    }
+
+    @Override
+    public ServiceResponseMessage postClassCategories(CategoriesReq categoriesReq) {
+        garbageClassSearchDao.insertNewClassCategories(categoriesReq.getClassKey(),categoriesReq.getClassNum());
+        return ServiceResponseMessage.createBySuccessCodeMessage("创建成功");
     }
 }
