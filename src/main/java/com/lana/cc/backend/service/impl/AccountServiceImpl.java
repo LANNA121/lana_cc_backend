@@ -12,19 +12,18 @@ import com.lana.cc.backend.pojo.vo.req.LoginReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
 import com.lana.cc.backend.pojo.vo.req.RegisterReq;
 import com.lana.cc.backend.pojo.vo.rsp.AddressRsp;
+import com.lana.cc.backend.pojo.vo.rsp.AllUserProfileRsp;
 import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 import com.lana.cc.backend.pojo.vo.rsp.LoginRsp;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.utils.HttpUtil;
 import com.lana.cc.backend.utils.JWTUtil;
 import com.lana.cc.backend.utils.ObjectUtil;
-import javafx.print.Collation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -127,7 +126,7 @@ public class AccountServiceImpl implements AccountService {
         }
         AddressRsp addressRsp = new AddressRsp();
         List<AccountAddressPO> accountAddressList = addressDao.selectAccountAddressByUid(uid);
-        if(null == accountAddressList){
+        if (null == accountAddressList) {
             return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", addressRsp);
         }
         List<AddressRsp.Address> addressList = new ArrayList<>();
@@ -137,34 +136,49 @@ public class AccountServiceImpl implements AccountService {
             addressList.add(address);
         }
         addressRsp.setAddressList(addressList);
-        return ServiceResponseMessage.createBySuccessCodeMessage("获取成功",addressRsp);
+        return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", addressRsp);
     }
 
     @Override
     public ServiceResponseMessage createNewAddress(AddressReq addressReq) {
-        if(null != addressReq){
+        if (null != addressReq) {
             AccountAddressPO accountAddressEntity = new AccountAddressPO();
-            BeanUtils.copyProperties(addressReq,accountAddressEntity);
+            BeanUtils.copyProperties(addressReq, accountAddressEntity);
             accountAddressEntity.setUid(HttpUtil.getUserUid());
             addressDao.insertNewAddress(accountAddressEntity);
-            return ServiceResponseMessage.createBySuccessCodeMessage("获取成功","");
+            return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", "");
         }
-        return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.BAD_REQUEST,"");
+        return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.BAD_REQUEST, "");
     }
 
 
     @Override
     public ServiceResponseMessage deleteAddressByIdAndUid(int addressId, Integer uid) {
-        if(null != uid &&  uid != 0 ){
-            if(!uid.equals(HttpUtil.getUserUid())){
-                return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.UNAUTHORIZED,"权限限制");
-            }else {
+        if (null != uid && uid != 0) {
+            if (!uid.equals(HttpUtil.getUserUid())) {
+                return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.UNAUTHORIZED, "权限限制");
+            } else {
                 uid = HttpUtil.getUserUid();
             }
         } else {
             uid = HttpUtil.getUserUid();
         }
-        addressDao.deleteAddressByIdAndUid(addressId,uid);
-        return ServiceResponseMessage.createBySuccessCodeMessage("删除成功","");
+        addressDao.deleteAddressByIdAndUid(addressId, uid);
+        return ServiceResponseMessage.createBySuccessCodeMessage("删除成功", "");
+    }
+
+    @Override
+    public ServiceResponseMessage fetchAllProfile() {
+        List<AccountPO> accountList = accountDao.selectAllAccountInfo();
+        List<UserProfileRsp> userProfileRspList = new ArrayList<>();
+        AllUserProfileRsp allUserProfileRsp = new AllUserProfileRsp();
+        accountList.forEach(accountInfo -> {
+            UserProfileRsp userProfileRsp = new UserProfileRsp();
+            BeanUtils.copyProperties(accountInfo, userProfileRsp);
+            userProfileRsp.setCoins(100L);
+            userProfileRspList.add(userProfileRsp);
+        });
+        allUserProfileRsp.setUserProfileRspList(userProfileRspList);
+        return ServiceResponseMessage.createBySuccessCodeMessage("获取成功",allUserProfileRsp);
     }
 }

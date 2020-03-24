@@ -1,0 +1,28 @@
+### 用户登录获取X-oken
+
+POST {{baseUrl}}/account/login
+Content-Type: application/json
+
+{
+  "userName": "Lana",
+  "password": "Password"
+}
+
+> {%
+client.global.set("X-Token", response.body.data.token);
+%}
+
+
+### 获取用户Profile
+
+GET {{baseUrl}}/account/profile
+Accept: application/json
+X-Token:{{X-Token}}
+
+### 
+GET {{baseUrl}}/account/all/user
+Accept: application/json
+X-Token:{{X-Token}}
+
+###
+

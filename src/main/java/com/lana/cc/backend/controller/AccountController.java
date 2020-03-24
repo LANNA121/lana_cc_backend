@@ -48,6 +48,12 @@ public class AccountController {
         return accountService.fetchProfileByUid(uid);
     }
 
+    @Security(roles = RoleEnum.OSS, checkToken = false)
+    @GetMapping(value = "/all/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchAllProfile() {
+        return accountService.fetchAllProfile();
+    }
+
     @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
     @GetMapping(value = "/address", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllAddressByUid(@RequestParam(value = "uid",required = false) Integer uid) {

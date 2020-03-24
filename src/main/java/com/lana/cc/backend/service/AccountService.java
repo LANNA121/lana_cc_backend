@@ -79,4 +79,11 @@ public interface AccountService {
      * @return 删除地址信息的处理结果
      */
     ServiceResponseMessage deleteAddressByIdAndUid(int addressId, Integer uid);
+
+    /**
+     * 查询所有的用户信息
+     *
+     * @return 查询到的用户信息的查询结果
+     */
+    ServiceResponseMessage fetchAllProfile();
 }

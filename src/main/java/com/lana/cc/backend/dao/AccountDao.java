@@ -3,6 +3,8 @@ package com.lana.cc.backend.dao;
 import com.lana.cc.backend.pojo.po.AccountPO;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * @author LANA
  * @version 1.0
@@ -86,4 +88,12 @@ public interface AccountDao {
      */
     @Update("update lana_account set birthday = #{birthday} where uid = #{uid}")
     void updateProfileBirthdayByUid(@Param("birthday") Long birthday, @Param("uid") Integer uid);
+
+    /**
+     * 查询说有的Account信息
+     *
+     * @return 查询到的Account信息结果
+     */
+    @Select("select * from lana_account")
+    List<AccountPO> selectAllAccountInfo();
 }
