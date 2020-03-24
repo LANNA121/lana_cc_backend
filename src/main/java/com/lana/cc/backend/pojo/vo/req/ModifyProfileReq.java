@@ -6,6 +6,7 @@ package com.lana.cc.backend.pojo.vo.req;
  * @date 2020/2/23 14:11
  */
 public class ModifyProfileReq {
+    private Integer uid;
     private Long birthday;
     private String nikeName;
     private String signature;
@@ -17,6 +18,13 @@ public class ModifyProfileReq {
 
     public void setBirthday(Long birthday) {
         this.birthday = birthday;
+    }
+    public void setUid(Integer uid){
+        this.uid = uid;
+    }
+
+    public Integer getUid() {
+        return uid;
     }
 
     public String getNikeName() {

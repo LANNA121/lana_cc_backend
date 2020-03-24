@@ -55,7 +55,7 @@ public interface AccountDao {
      * 更新用户头像
      *
      * @param avatar 用户头像
-     * @param uid 用户UID
+     * @param uid    用户UID
      */
 
     @Update("update lana_account set avatar = #{avatar} where uid = #{uid}")
@@ -65,26 +65,26 @@ public interface AccountDao {
      * 修改NikeName名字
      *
      * @param nikeName 用户昵称
-     * @param uid 用户uid
+     * @param uid      用户uid
      */
     @Update("update lana_account set nike_name = #{nikeName} where uid = #{uid}")
-    void updateProfileNikeNameByUid(@Param("nikeName") String nikeName,@Param("uid") Integer uid);
+    void updateProfileNikeNameByUid(@Param("nikeName") String nikeName, @Param("uid") Integer uid);
 
 
     /**
      * 根据用户uid修改用户签名
      *
      * @param signature 用户个性签名
-     * @param uid 用户UID
+     * @param uid       用户UID
      */
     @Update("update lana_account set `signature` = #{signature} where uid = #{uid}")
-    void updateProfileSignatureByUid(@Param("signature") String signature,@Param("uid") Integer uid);
+    void updateProfileSignatureByUid(@Param("signature") String signature, @Param("uid") Integer uid);
 
     /**
      * 根据用户uid修改用户生日
      *
      * @param birthday 用户生日的时间戳
-     * @param uid 用户UID
+     * @param uid      用户UID
      */
     @Update("update lana_account set birthday = #{birthday} where uid = #{uid}")
     void updateProfileBirthdayByUid(@Param("birthday") Long birthday, @Param("uid") Integer uid);
@@ -96,4 +96,13 @@ public interface AccountDao {
      */
     @Select("select * from lana_account")
     List<AccountPO> selectAllAccountInfo();
+
+    /**
+     * 通过用户Uid更新用户身份权限
+     *
+     * @param uid  用户Uid
+     * @param role 用户身份权限
+     */
+    @Update("update lana_account set role = #{role} where uid = #{uid}")
+    void updateProfileRoleByAccountUid(@Param("uid") int uid, @Param("role") String role);
 }

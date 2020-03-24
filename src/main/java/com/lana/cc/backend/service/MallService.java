@@ -25,4 +25,12 @@ public interface MallService {
      * @return 创建的结果
      */
     ServiceResponseMessage createNewGoods(GoodsDetailReq goodsDetailReq);
+
+    /**
+     * 删除Goods通过GoodsId
+     *
+     * @param goodsId 用户商品ID
+     * @return 删除商品的删除结果
+     */
+    ServiceResponseMessage deleteGoodsByGoodsId(Integer goodsId);
 }

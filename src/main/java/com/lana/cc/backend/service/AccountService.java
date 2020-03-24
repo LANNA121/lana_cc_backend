@@ -86,4 +86,13 @@ public interface AccountService {
      * @return 查询到的用户信息的查询结果
      */
     ServiceResponseMessage fetchAllProfile();
+
+    /**
+     * 修改用户权限
+     *
+     * @param uid 用户Uid
+     * @param role 用户权限
+     * @return 修改权限后的用户查询结果
+     */
+    ServiceResponseMessage modifyUserIdentityPromotion(int uid, String role);
 }

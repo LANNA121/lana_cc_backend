@@ -1,10 +1,7 @@
 package com.lana.cc.backend.dao;
 
 import com.lana.cc.backend.pojo.po.GoodsPO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -34,4 +31,12 @@ public interface MallDao {
      */
     @Select("select * from lana_mall_goods where total > 0")
     List<GoodsPO> selectAllEnableGoodsDetails();
+
+    /**
+     * 通过商品ID删除商品
+     *
+     * @param goodsId 商品ID
+     */
+    @Delete("delete from lana_mall_goods where id = #{goodsId} limit 1")
+    void deleteGoodsByGoodsId(@Param("goodsId") Integer goodsId);
 }

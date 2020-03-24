@@ -3,10 +3,7 @@ package com.lana.cc.backend.controller;
 import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
-import com.lana.cc.backend.pojo.vo.req.AddressReq;
-import com.lana.cc.backend.pojo.vo.req.LoginReq;
-import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
-import com.lana.cc.backend.pojo.vo.req.RegisterReq;
+import com.lana.cc.backend.pojo.vo.req.*;
 import com.lana.cc.backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -52,6 +49,13 @@ public class AccountController {
     @GetMapping(value = "/all/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllProfile() {
         return accountService.fetchAllProfile();
+    }
+
+
+    @Security(roles = RoleEnum.OSS, checkToken = false)
+    @PostMapping(value = "/role", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage modifyUserIdentityPromotion(@RequestBody UidAndIdentityReq uidAndIdentityReq) {
+        return accountService.modifyUserIdentityPromotion(uidAndIdentityReq.getUid(),uidAndIdentityReq.getRole());
     }
 
     @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)

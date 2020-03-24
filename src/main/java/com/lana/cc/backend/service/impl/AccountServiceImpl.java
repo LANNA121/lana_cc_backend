@@ -75,20 +75,27 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ServiceResponseMessage modifyProfile(ModifyProfileReq modifyProfileReq) {
+
         if (null == modifyProfileReq) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.PARAMETER_IS_EMPTY, "修改的对象为空");
         }
+        Integer uid = null;
+        if (ObjectUtil.isNotEmpty(modifyProfileReq.getUid())) {
+            uid = modifyProfileReq.getUid();
+        } else {
+            uid = HttpUtil.getUserUid();
+        }
         if (ObjectUtil.isNotEmpty(modifyProfileReq.getAvatar())) {
-            accountDao.updateProfileAvatarByUid(modifyProfileReq.getAvatar(), HttpUtil.getUserUid());
+            accountDao.updateProfileAvatarByUid(modifyProfileReq.getAvatar(), uid);
         }
         if (ObjectUtil.isNotEmpty(modifyProfileReq.getNikeName())) {
-            accountDao.updateProfileNikeNameByUid(modifyProfileReq.getNikeName(), HttpUtil.getUserUid());
+            accountDao.updateProfileNikeNameByUid(modifyProfileReq.getNikeName(), uid);
         }
         if (ObjectUtil.isNotEmpty(modifyProfileReq.getSignature())) {
-            accountDao.updateProfileSignatureByUid(modifyProfileReq.getSignature(), HttpUtil.getUserUid());
+            accountDao.updateProfileSignatureByUid(modifyProfileReq.getSignature(), uid);
         }
         if (ObjectUtil.isNotEmpty(modifyProfileReq.getBirthday())) {
-            accountDao.updateProfileBirthdayByUid(modifyProfileReq.getBirthday(), HttpUtil.getUserUid());
+            accountDao.updateProfileBirthdayByUid(modifyProfileReq.getBirthday(), uid);
         }
         return ServiceResponseMessage.createBySuccessCodeMessage("修改成功", "");
     }
@@ -179,6 +186,12 @@ public class AccountServiceImpl implements AccountService {
             userProfileRspList.add(userProfileRsp);
         });
         allUserProfileRsp.setUserProfileRspList(userProfileRspList);
-        return ServiceResponseMessage.createBySuccessCodeMessage("获取成功",allUserProfileRsp);
+        return ServiceResponseMessage.createBySuccessCodeMessage("获取成功", allUserProfileRsp);
+    }
+
+    @Override
+    public ServiceResponseMessage modifyUserIdentityPromotion(int uid, String role) {
+        accountDao.updateProfileRoleByAccountUid(uid, role);
+        return ServiceResponseMessage.createBySuccessCodeMessage("变更用户权限成功");
     }
 }

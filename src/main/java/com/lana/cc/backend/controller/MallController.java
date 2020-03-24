@@ -24,7 +24,7 @@ public class MallController {
 
     @Security(roles = RoleEnum.ALL, checkToken = false)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage fetchAllGoodsGoodsDetail() {
+    public ServiceResponseMessage fetchAllEnableGoodsDetail() {
         return mallService.fetchAllEnableGoodsDetails();
     }
 
@@ -32,5 +32,11 @@ public class MallController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage createNewGoods(@RequestBody GoodsDetailReq goodsDetailReq) {
         return mallService.createNewGoods(goodsDetailReq);
+    }
+
+    @Security(roles = RoleEnum.OSS, checkToken = false)
+    @DeleteMapping(value = "goods",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage deleteGoods(@RequestParam("goodsId") Integer goodsId) {
+        return mallService.deleteGoodsByGoodsId(goodsId);
     }
 }

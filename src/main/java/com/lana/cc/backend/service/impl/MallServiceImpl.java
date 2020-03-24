@@ -53,4 +53,10 @@ public class MallServiceImpl implements MallService {
         mallDao.insertNewGoodsDetail(goods);
         return ServiceResponseMessage.createBySuccessCodeMessage("新增加商品成功");
     }
+
+    @Override
+    public ServiceResponseMessage deleteGoodsByGoodsId(Integer goodsId) {
+        mallDao.deleteGoodsByGoodsId(goodsId);
+        return ServiceResponseMessage.createBySuccessCodeMessage("商品删除成功");
+    }
 }
