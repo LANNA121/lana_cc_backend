@@ -70,8 +70,8 @@ public class NewsServiceImpl implements NewsService {
         if(ObjectUtil.isNotEmpty(newsDetailReq.getImage())){
             newsDao.updateNewsImageByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getImage());
         }
-        if(ObjectUtil.isNotEmpty(newsDetailReq.getNewsUrl())){
-            newsDao.updateNewsUrlByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getNewsUrl());
+        if(ObjectUtil.isNotEmpty(newsDetailReq.getContent())){
+            newsDao.updateContentByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getContent());
         }
         if(ObjectUtil.isNotEmpty(newsDetailReq.getTitle())){
             newsDao.updateNewsTitleByNewsId(newsDetailReq.getNewsId(),newsDetailReq.getTitle());

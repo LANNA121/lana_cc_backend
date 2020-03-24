@@ -31,7 +31,8 @@ public class NewsDetailsRsp {
     public static class News{
         private int id;
         private String title;
-        private String newsUrl;
+        private int type;
+        private String content;
         private String image;
         private int top;
         private long createTime;
@@ -55,12 +56,20 @@ public class NewsDetailsRsp {
             this.title = title;
         }
 
-        public String getNewsUrl() {
-            return newsUrl;
+        public int getType() {
+            return type;
         }
 
-        public void setNewsUrl(String newsUrl) {
-            this.newsUrl = newsUrl;
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
         }
 
         public int getTop() {

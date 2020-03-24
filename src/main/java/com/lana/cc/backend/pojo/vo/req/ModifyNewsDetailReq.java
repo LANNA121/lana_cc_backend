@@ -8,7 +8,7 @@ package com.lana.cc.backend.pojo.vo.req;
 public class ModifyNewsDetailReq {
     private int newsId;
     private String title;
-    private String newsUrl;
+    private String content;
     private String image;
     private int top;
 
@@ -28,12 +28,12 @@ public class ModifyNewsDetailReq {
         this.title = title;
     }
 
-    public String getNewsUrl() {
-        return newsUrl;
+    public String getContent() {
+        return content;
     }
 
-    public void setNewsUrl(String newsUrl) {
-        this.newsUrl = newsUrl;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getImage() {

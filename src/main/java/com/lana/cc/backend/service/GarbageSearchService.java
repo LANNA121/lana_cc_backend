@@ -42,4 +42,12 @@ public interface GarbageSearchService {
      * @return 增加后的处理结果
      */
     ServiceResponseMessage postClassCategories(CategoriesReq categoriesReq);
+
+    /**
+     * 删除垃圾分类属性结构
+     *
+     * @param classKey 需要删除的Key
+     * @return 删除后的处理结果
+     */
+    ServiceResponseMessage deleteClassCategories(String classKey);
 }

@@ -67,4 +67,11 @@ public class CommonController {
         return garbageSearchService.postClassCategories(categoriesReq);
     }
 
+    @ResponseBody
+    @Security(roles = RoleEnum.OSS)
+    @DeleteMapping(value = "/tools/categories",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage deleteClassCategories(@RequestParam String classKey){
+        return garbageSearchService.deleteClassCategories(classKey);
+    }
+
 }

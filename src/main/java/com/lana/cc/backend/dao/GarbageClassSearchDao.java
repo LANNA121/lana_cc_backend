@@ -61,4 +61,12 @@ public interface GarbageClassSearchDao {
      */
     @Insert("insert into lana_garbage_search(name, sortId) values (#{classKey},#{classNum})")
     void insertNewClassCategories(@Param("classKey") String classKey, @Param("classNum") Integer classNum);
+
+    /**
+     * 删除垃圾分类属性
+     *
+     * @param classKey 分类相关的Key
+     */
+    @Delete("delete from lana_garbage_search where name = #{classKey} limit 1")
+    void deleteClassCategories(@Param("classKey") String classKey);
 }

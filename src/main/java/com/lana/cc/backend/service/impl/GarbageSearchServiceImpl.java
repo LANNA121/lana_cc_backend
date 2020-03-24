@@ -61,4 +61,10 @@ public class GarbageSearchServiceImpl implements GarbageSearchService {
         garbageClassSearchDao.insertNewClassCategories(categoriesReq.getClassKey(),categoriesReq.getClassNum());
         return ServiceResponseMessage.createBySuccessCodeMessage("创建成功");
     }
+
+    @Override
+    public ServiceResponseMessage deleteClassCategories(String classKey) {
+        garbageClassSearchDao.deleteClassCategories(classKey);
+        return ServiceResponseMessage.createBySuccessCodeMessage("删除成功");
+    }
 }

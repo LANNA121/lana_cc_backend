@@ -40,8 +40,8 @@ public interface NewsDao {
      * @param newsDetail 新闻信息明细
      */
 
-    @Insert("insert into lana_news(title, image, news_url, top, create_time, create_by, status) " +
-            "values (#{newsDetail.title},#{newsDetail.image},#{newsDetail.newsUrl},#{newsDetail.top},#{newsDetail.createTime},#{newsDetail.createBy},0)")
+    @Insert("insert into lana_news(title, image, type,content, top, create_time, create_by, status) " +
+            "values (#{newsDetail.title},#{newsDetail.image},#{newsDetail.type},#{newsDetail.content},#{newsDetail.top},#{newsDetail.createTime},#{newsDetail.createBy},0)")
     void insertNewsDetail(@Param("newsDetail") NewsPO newsDetail);
 
     /**
@@ -66,10 +66,10 @@ public interface NewsDao {
      * 更新News的跳转链接
      *
      * @param newsId  NewsId
-     * @param newsUrl news的Url
+     * @param content news的Url
      */
-    @Update("update lana_news set news_url = #{newsUrl} where id = #{newsId} limit 1")
-    void updateNewsUrlByNewsId(@Param("newsId") int newsId, @Param("newsUrl") String newsUrl);
+    @Update("update lana_news set content = #{content} where id = #{newsId} limit 1")
+    void updateContentByNewsId(@Param("newsId") int newsId, @Param("content") String content);
 
     /**
      * 更新News Title

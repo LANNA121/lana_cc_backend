@@ -3,6 +3,11 @@ Accept: application/json
 
 ###
 
+DELETE {{baseUrl}}/common/tools/categories?classKey=TEST-前女友
+Content-Type: application/json
+X-Token:{{X-Token}}
+
+###
 
 POST {{baseUrl}}/common/tools/categories
 Content-Type: application/json
