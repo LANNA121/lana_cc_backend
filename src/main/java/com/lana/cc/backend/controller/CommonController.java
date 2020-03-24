@@ -55,15 +55,15 @@ public class CommonController {
 
     @ResponseBody
     @Security(roles = RoleEnum.OSS)
-    @PutMapping(value = "/tools/categories",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage modifyClassCategories(@RequestParam("classKey")String classKey,@RequestParam("classNum") @Min(1) @Max(4) Integer classNum){
-        return garbageSearchService.modifyClassCategories(classKey,classNum);
+    @PutMapping(value = "/tools/categories",consumes =MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage modifyClassCategories(@RequestBody CategoriesReq categoriesReq){
+        return garbageSearchService.modifyClassCategories(categoriesReq.getClassKey(),categoriesReq.getClassNum());
     }
 
     @ResponseBody
     @Security(roles = RoleEnum.OSS)
     @PostMapping(value = "/tools/categories",consumes =MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage postClassCategories(CategoriesReq categoriesReq){
+    public ServiceResponseMessage postClassCategories(@RequestBody CategoriesReq categoriesReq){
         return garbageSearchService.postClassCategories(categoriesReq);
     }
 
