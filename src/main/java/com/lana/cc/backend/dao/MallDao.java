@@ -1,6 +1,7 @@
 package com.lana.cc.backend.dao;
 
 import com.lana.cc.backend.pojo.po.GoodsPO;
+import com.lana.cc.backend.pojo.po.MallBillPO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -119,4 +120,13 @@ public interface MallDao {
     @Insert("insert into lana_mall_bill(id, uid, goods_id, create_time, bill_status, address_id, status) VALUES " +
             "(#{lanaId},#{userUid},#{goodsId},UNIX_TIMESTAMP(now()) * 1000,0,#{addressId},0)")
     void insertNewMallBill(@Param("userUid") Integer userUid, @Param("lanaId") String lanaId, @Param("goodsId") int goodsId, @Param("addressId") int addressId);
+
+    /**
+     * 查询用户的说有兑换记录
+     *
+     * @param uid 用户uid
+     * @return 查询到的结果
+     */
+    @Select("select * from lana_mall_bill where uid = #{uid} order by create_time desc")
+    List<MallBillPO> selectAllBillDetailsByUid(@Param("uid") Integer uid);
 }

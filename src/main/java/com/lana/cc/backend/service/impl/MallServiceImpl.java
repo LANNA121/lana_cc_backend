@@ -8,6 +8,7 @@ import com.lana.cc.backend.dao.MallDao;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.po.AccountAddressPO;
 import com.lana.cc.backend.pojo.po.GoodsPO;
+import com.lana.cc.backend.pojo.po.MallBillPO;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.GoodsDetailReq;
@@ -128,5 +129,15 @@ public class MallServiceImpl implements MallService {
             }
         }
         return ServiceResponseMessage.createByFailCodeMessage("兑换失败");
+    }
+
+    @Override
+    public ServiceResponseMessage fetchAllBillByUid(Integer uid) {
+        if(!ObjectUtil.isNotEmpty(uid)){
+            uid = HttpUtil.getUserUid();
+        }
+        // todo MallBillPO 查询
+        List<MallBillPO> mallBillList = mallDao.selectAllBillDetailsByUid(uid);
+        return ServiceResponseMessage.createBySuccessCodeMessage("查询成功",mallBillList);
     }
 }

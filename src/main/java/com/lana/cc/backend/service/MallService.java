@@ -51,4 +51,12 @@ public interface MallService {
      * @return 兑换礼品兑换结果
      */
     ServiceResponseMessage redeemGiftItems(RedeemGiftReq redeemGiftReq);
+
+    /**
+     * 根据Uid查询用户账单记录
+     *
+     * @param uid 用户uid
+     * @return 查询到的兑换记录的账单结果
+     */
+    ServiceResponseMessage fetchAllBillByUid(Integer uid);
 }

@@ -25,9 +25,8 @@ public class MallController {
     MallService mallService;
 
     @Security(roles = RoleEnum.ALL, checkToken = false)
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "goods",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllEnableGoodsDetail() {
-
         return mallService.fetchAllEnableGoodsDetails();
     }
 
@@ -53,5 +52,11 @@ public class MallController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage redeemGiftItems(@RequestBody RedeemGiftReq redeemGiftReq) {
         return mallService.redeemGiftItems(redeemGiftReq);
+    }
+
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER})
+    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchAllBillByUid(@RequestParam(value = "uid",required = false) Integer uid) {
+        return mallService.fetchAllBillByUid(uid);
     }
 }
