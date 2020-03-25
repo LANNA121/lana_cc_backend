@@ -3,13 +3,10 @@ package com.lana.cc.backend.controller;
 import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
-import com.lana.cc.backend.pojo.vo.req.RedeemPointsReq;
-import com.lana.cc.backend.service.GameService;
+import com.lana.cc.backend.pojo.vo.req.RedeemCoinsReq;
+import com.lana.cc.backend.service.AccountBookService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -23,11 +20,17 @@ import javax.annotation.Resource;
 @RequestMapping("/book")
 public class AccountBookController {
     @Resource
-    GameService gameService;
+    AccountBookService accountBookService;
 
-    @Security(roles = {RoleEnum.OSS,RoleEnum.USER},checkToken = false)
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER})
     @PostMapping(value = "/redeem",produces  =  MediaType.APPLICATION_JSON_VALUE)
-    public ServiceResponseMessage redeemPoints(@RequestBody RedeemPointsReq redeemPointsReq){
-        return gameService.redeemPoints(redeemPointsReq);
+    public ServiceResponseMessage redeemCoins(@RequestBody RedeemCoinsReq redeemCoinsReq){
+        return accountBookService.redeemCoins(redeemCoinsReq);
+    }
+
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER})
+    @GetMapping(value = "/history",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchAccountBookHistoryByUid(@RequestParam(value = "uid",required = false) Integer uid){
+        return accountBookService.fetchAccountBookHistoryByUid(uid);
     }
 }

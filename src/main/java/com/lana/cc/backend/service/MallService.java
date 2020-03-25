@@ -2,6 +2,8 @@ package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.GoodsDetailReq;
+import com.lana.cc.backend.pojo.vo.req.ModifyGoodsDetailReq;
+import com.lana.cc.backend.pojo.vo.req.RedeemGiftReq;
 
 /**
  * @author LANA
@@ -33,4 +35,20 @@ public interface MallService {
      * @return 删除商品的删除结果
      */
     ServiceResponseMessage deleteGoodsByGoodsId(Integer goodsId);
+
+    /**
+     * 更新商品信息
+     *
+     * @param modifyGoodsDetailReq 修改商品信息的请求
+     * @return 更新成功的商品明细
+     */
+    ServiceResponseMessage updateGoodsDetails(ModifyGoodsDetailReq modifyGoodsDetailReq);
+
+    /**
+     * 兑换商品礼品
+     *
+     * @param redeemGiftReq 兑换商品礼品请求
+     * @return 兑换礼品兑换结果
+     */
+    ServiceResponseMessage redeemGiftItems(RedeemGiftReq redeemGiftReq);
 }

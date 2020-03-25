@@ -37,6 +37,10 @@ public enum ResultCodeEnum {
     IMAGE_IS_EMPTY(2010),
     //参数为空
     PARAMETER_IS_EMPTY(2011),
+    // 商品不存在或者兑换结束
+    GOODS_NO_FIND_OR_DISABLE(2020),
+    // 商品不存在或者兑换结束
+    ADDR_NO_FIND_OR_DISABLE(2020),
 
     // 未知错误
     UNKNOWN(2100),

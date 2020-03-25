@@ -15,6 +15,7 @@ import com.lana.cc.backend.pojo.vo.rsp.AddressRsp;
 import com.lana.cc.backend.pojo.vo.rsp.AllUserProfileRsp;
 import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 import com.lana.cc.backend.pojo.vo.rsp.LoginRsp;
+import com.lana.cc.backend.service.AccountBookService;
 import com.lana.cc.backend.service.AccountService;
 import com.lana.cc.backend.utils.HttpUtil;
 import com.lana.cc.backend.utils.JWTUtil;
@@ -38,6 +39,8 @@ public class AccountServiceImpl implements AccountService {
     AccountDao accountDao;
     @Resource
     AddressDao addressDao;
+    @Resource
+    AccountBookService accountBookService;
 
     @Override
     public ServiceResponseMessage login(LoginReq loginReq) {
@@ -121,7 +124,7 @@ public class AccountServiceImpl implements AccountService {
         } else {
             UserProfileRsp userProfileRsp = new UserProfileRsp();
             BeanUtils.copyProperties(accountInfo, userProfileRsp);
-            userProfileRsp.setCoins(100L);
+            userProfileRsp.setCoins(accountBookService.fetchAccountRemainingPointsByUid(uid));
             return userProfileRsp;
         }
     }
@@ -182,7 +185,7 @@ public class AccountServiceImpl implements AccountService {
         accountList.forEach(accountInfo -> {
             UserProfileRsp userProfileRsp = new UserProfileRsp();
             BeanUtils.copyProperties(accountInfo, userProfileRsp);
-            userProfileRsp.setCoins(100L);
+            userProfileRsp.setCoins(accountBookService.fetchAccountRemainingPointsByUid(accountInfo.getUid()));
             userProfileRspList.add(userProfileRsp);
         });
         allUserProfileRsp.setUserProfileRspList(userProfileRspList);

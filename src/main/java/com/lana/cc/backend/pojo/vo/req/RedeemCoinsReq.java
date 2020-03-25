@@ -5,7 +5,7 @@ package com.lana.cc.backend.pojo.vo.req;
  * @version 1.0
  * @date 2020/3/19 23:07
  */
-public class RedeemPointsReq {
+public class RedeemCoinsReq {
     private String lanaId;
     private String checkKey;
     private String source;

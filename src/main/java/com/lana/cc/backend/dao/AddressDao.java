@@ -41,4 +41,14 @@ public interface AddressDao {
      */
     @Delete("delete from lana_account_addr where id=#{addressId} and uid = #{uid}")
     void deleteAddressByIdAndUid(@Param("addressId") int addressId, @Param("uid") Integer uid);
+
+    /**
+     * 查询用户地址信息 根据用户Uid和地址相关ID
+     *
+     * @param addressId 用户地址ID
+     * @param userUid   用户uid
+     * @return 查询到的兑换结果
+     */
+    @Select("select * from lana_account_addr where id=#{addressId} and uid = #{uid} ")
+    AccountAddressPO selectAccountAddressByUidAndAddressId(@Param("addressId") int addressId, @Param("userUid") Integer userUid);
 }

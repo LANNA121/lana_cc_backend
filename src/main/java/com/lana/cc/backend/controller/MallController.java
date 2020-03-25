@@ -4,6 +4,8 @@ import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.GoodsDetailReq;
+import com.lana.cc.backend.pojo.vo.req.ModifyGoodsDetailReq;
+import com.lana.cc.backend.pojo.vo.req.RedeemGiftReq;
 import com.lana.cc.backend.service.MallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,18 +27,31 @@ public class MallController {
     @Security(roles = RoleEnum.ALL, checkToken = false)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllEnableGoodsDetail() {
+
         return mallService.fetchAllEnableGoodsDetails();
     }
 
-    @Security(roles = RoleEnum.OSS, checkToken = false)
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @Security(roles = RoleEnum.OSS)
+    @PostMapping(value = "goods",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage createNewGoods(@RequestBody GoodsDetailReq goodsDetailReq) {
         return mallService.createNewGoods(goodsDetailReq);
     }
 
-    @Security(roles = RoleEnum.OSS, checkToken = false)
-    @DeleteMapping(value = "goods",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @Security(roles = RoleEnum.OSS)
+    @PutMapping(value = "goods",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage updateGoodsDetails(@RequestBody ModifyGoodsDetailReq modifyGoodsDetailReq) {
+        return mallService.updateGoodsDetails(modifyGoodsDetailReq);
+    }
+
+    @Security(roles = RoleEnum.OSS)
+    @DeleteMapping(value = "goods",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage deleteGoods(@RequestParam("goodsId") Integer goodsId) {
         return mallService.deleteGoodsByGoodsId(goodsId);
+    }
+
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER})
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage redeemGiftItems(@RequestBody RedeemGiftReq redeemGiftReq) {
+        return mallService.redeemGiftItems(redeemGiftReq);
     }
 }

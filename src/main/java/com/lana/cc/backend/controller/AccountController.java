@@ -33,50 +33,50 @@ public class AccountController {
         return accountService.signIn(registerReq);
     }
 
-    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS})
     @PutMapping(value = "/modify", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage modifyProfile(@RequestBody ModifyProfileReq modifyProfileReq) {
         return accountService.modifyProfile(modifyProfileReq);
     }
 
-    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS})
     @GetMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchProfileByUid(@RequestParam(value = "uid",required = false) Integer uid) {
         return accountService.fetchProfileByUid(uid);
     }
 
-    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS})
     @DeleteMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage deleteAccountProfileByUid(@RequestParam(value = "uid") Integer uid) {
         return accountService.deleteAccountProfileByUid(uid);
     }
 
-    @Security(roles = RoleEnum.OSS, checkToken = false)
+    @Security(roles = RoleEnum.OSS)
     @GetMapping(value = "/all/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllProfile() {
         return accountService.fetchAllProfile();
     }
 
 
-    @Security(roles = RoleEnum.OSS, checkToken = false)
+    @Security(roles = RoleEnum.OSS)
     @PostMapping(value = "/role", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage modifyUserIdentityPromotion(@RequestBody UidAndIdentityReq uidAndIdentityReq) {
         return accountService.modifyUserIdentityPromotion(uidAndIdentityReq.getUid(),uidAndIdentityReq.getRole());
     }
 
-    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS})
     @GetMapping(value = "/address", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllAddressByUid(@RequestParam(value = "uid",required = false) Integer uid) {
         return accountService.fetchAllAddressByUid(uid);
     }
 
-    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS})
     @PostMapping(value = "/address", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage postNewAddress(@RequestBody AddressReq addressReq) {
         return accountService.createNewAddress(addressReq);
     }
 
-    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS})
     @DeleteMapping(value = "/address", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage deleteAddressByIdAndUid(@RequestParam(value = "addressId",defaultValue = "0") int addressId, @RequestParam(value = "uid",required = false) Integer uid) {
         return accountService.deleteAddressByIdAndUid(addressId,uid);
