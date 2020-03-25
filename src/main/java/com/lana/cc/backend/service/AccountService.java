@@ -95,4 +95,12 @@ public interface AccountService {
      * @return 修改权限后的用户查询结果
      */
     ServiceResponseMessage modifyUserIdentityPromotion(int uid, String role);
+
+    /**
+     * 删除商户账号
+     *
+     * @param uid 用户uid
+     * @return 返回用户账号删除的处理状态
+     */
+    ServiceResponseMessage deleteAccountProfileByUid(Integer uid);
 }

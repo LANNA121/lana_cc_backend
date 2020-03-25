@@ -194,4 +194,10 @@ public class AccountServiceImpl implements AccountService {
         accountDao.updateProfileRoleByAccountUid(uid, role);
         return ServiceResponseMessage.createBySuccessCodeMessage("变更用户权限成功");
     }
+
+    @Override
+    public ServiceResponseMessage deleteAccountProfileByUid(Integer uid) {
+        accountDao.deleteAccountProfileByUid(uid);
+        return ServiceResponseMessage.createBySuccessCodeMessage("删除用户账号信息");
+    }
 }

@@ -18,6 +18,7 @@ public class UserProfileRsp {
     private Integer status;
     private Long createTime;
     private Long updateTime;
+    private String role;
 
     public Integer getUid() {
         return uid;
@@ -113,5 +114,13 @@ public class UserProfileRsp {
 
     public void setCoins(Long coins) {
         this.coins = coins;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

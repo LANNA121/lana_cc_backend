@@ -45,6 +45,12 @@ public class AccountController {
         return accountService.fetchProfileByUid(uid);
     }
 
+    @Security(roles = {RoleEnum.USER, RoleEnum.OSS}, checkToken = false)
+    @DeleteMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage deleteAccountProfileByUid(@RequestParam(value = "uid") Integer uid) {
+        return accountService.deleteAccountProfileByUid(uid);
+    }
+
     @Security(roles = RoleEnum.OSS, checkToken = false)
     @GetMapping(value = "/all/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllProfile() {
@@ -75,6 +81,5 @@ public class AccountController {
     public ServiceResponseMessage deleteAddressByIdAndUid(@RequestParam(value = "addressId",defaultValue = "0") int addressId, @RequestParam(value = "uid",required = false) Integer uid) {
         return accountService.deleteAddressByIdAndUid(addressId,uid);
     }
-
 
 }

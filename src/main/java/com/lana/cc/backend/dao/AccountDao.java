@@ -105,4 +105,12 @@ public interface AccountDao {
      */
     @Update("update lana_account set role = #{role} where uid = #{uid}")
     void updateProfileRoleByAccountUid(@Param("uid") int uid, @Param("role") String role);
+
+    /**
+     * 删除用户账号信息
+     *
+     * @param uid 用户uid
+     */
+    @Delete("delete from lana_account where uid = #{uid} limit 1")
+    void deleteAccountProfileByUid(@Param("uid") Integer uid);
 }
