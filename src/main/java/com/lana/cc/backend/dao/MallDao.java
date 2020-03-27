@@ -144,7 +144,7 @@ public interface MallDao {
      * @param billId  billId
      * @param userUid 操作人
      */
-    @Update("update lana_mall_bill set bill_status = 1 and operator = #{userUid} where id = #{billId}")
+    @Update("update lana_mall_bill set bill_status = 1, operator = #{userUid} where id = #{billId}")
     void updateBillStatusStartAndOperatorByBillId(@Param("billId") String billId, @Param("userUid") Integer userUid);
 
     /**
