@@ -1,6 +1,6 @@
 # lana_cc_backend
 ### 部署说明
-#### 1. 数据库相关
+#### 1. 数据库相关(navicat)
 创建数据库 
 
 ![create_database](./create_database.png)
@@ -27,6 +27,11 @@
   #### 5. 项目部署
   安装Java下 命令行 java -jar backend-0.0.1-SNAPSHOT.jar
   
-  
+  #### 后台运行
+  创建bat文件
+  @echo off
+  start javaw -jar backend-0.0.1-SNAPSHOT.jar
+  exit
+  启动bat就可
  
   
