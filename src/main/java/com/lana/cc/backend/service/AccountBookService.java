@@ -36,4 +36,12 @@ public interface AccountBookService {
      * @return 查询到的账单历史请求
      */
     ServiceResponseMessage fetchAccountBookHistoryByUid(Integer uid);
+
+    /**
+     * 查询用户Coins数量
+     *
+     * @param uid 用户UID
+     * @return 查询到的用户Coins数量
+     */
+    ServiceResponseMessage fetchAccountBookCoinsByUid(Integer uid);
 }

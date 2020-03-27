@@ -2,6 +2,7 @@ package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.GoodsDetailReq;
+import com.lana.cc.backend.pojo.vo.req.HandlerBillReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyGoodsDetailReq;
 import com.lana.cc.backend.pojo.vo.req.RedeemGiftReq;
 
@@ -59,4 +60,13 @@ public interface MallService {
      * @return 查询到的兑换记录的账单结果
      */
     ServiceResponseMessage fetchAllBillByUid(Integer uid);
+
+    /**
+     * 查询所有的账单记录
+     *
+     * @return 查询到的兑换记录的账单结果
+     */
+    ServiceResponseMessage fetchAllOssBill();
+
+    ServiceResponseMessage handlerAccountBill(HandlerBillReq handlerBillReq);
 }

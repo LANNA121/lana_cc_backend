@@ -33,4 +33,10 @@ public class AccountBookController {
     public ServiceResponseMessage fetchAccountBookHistoryByUid(@RequestParam(value = "uid",required = false) Integer uid){
         return accountBookService.fetchAccountBookHistoryByUid(uid);
     }
+
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER})
+    @GetMapping(value = "/coins",produces  =  MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchAccountCoinsByUid(@RequestParam(value = "uid",required = false) Integer uid){
+        return accountBookService.fetchAccountBookCoinsByUid(uid);
+    }
 }

@@ -4,6 +4,7 @@ import com.lana.cc.backend.annotation.Security;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.GoodsDetailReq;
+import com.lana.cc.backend.pojo.vo.req.HandlerBillReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyGoodsDetailReq;
 import com.lana.cc.backend.pojo.vo.req.RedeemGiftReq;
 import com.lana.cc.backend.service.MallService;
@@ -55,8 +56,20 @@ public class MallController {
     }
 
     @Security(roles = {RoleEnum.OSS,RoleEnum.USER})
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "bill",produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchAllBillByUid(@RequestParam(value = "uid",required = false) Integer uid) {
         return mallService.fetchAllBillByUid(uid);
+    }
+
+    @Security(roles = RoleEnum.OSS)
+    @GetMapping(value = "bill/all",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage fetchAllOssBill() {
+        return mallService.fetchAllOssBill();
+    }
+
+    @Security(roles = {RoleEnum.OSS,RoleEnum.USER})
+    @PutMapping(value = "bill/handler",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage handlerAccountBill(@RequestBody HandlerBillReq handlerBillReq) {
+        return mallService.handlerAccountBill(handlerBillReq);
     }
 }

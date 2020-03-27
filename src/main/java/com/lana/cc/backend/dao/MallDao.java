@@ -102,12 +102,12 @@ public interface MallDao {
     /**
      * 兑换商品 商品数量-1
      *
-     * @param id    商品ID
-     * @param total 期望的商品数量
+     * @param goodsId 商品ID
+     * @param total   期望的商品数量
      * @return 受影响的行数
      */
     @Update("update lana_mall_goods set total = total - 1  where id = #{goodsId} and total = #{total}")
-    int updateExchangeMallGoodsTotalByGoodsIdAndOldGoodsTotal(@Param("id") int id, @Param("total") int total);
+    int updateExchangeMallGoodsTotalByGoodsIdAndOldGoodsTotal(@Param("goodsId") int goodsId, @Param("total") int total);
 
     /**
      * 生成新的账单记录
@@ -129,4 +129,30 @@ public interface MallDao {
      */
     @Select("select * from lana_mall_bill where uid = #{uid} order by create_time desc")
     List<MallBillPO> selectAllBillDetailsByUid(@Param("uid") Integer uid);
+
+    /**
+     * 查询ALL兑换记录
+     *
+     * @return 查询到的结果
+     */
+    @Select("select * from lana_mall_bill order by bill_status,create_time desc")
+    List<MallBillPO> selectAllBillDetails();
+
+    /**
+     * 开始处理用户的单号
+     *
+     * @param billId  billId
+     * @param userUid 操作人
+     */
+    @Update("update lana_mall_bill set bill_status = 1 and operator = #{userUid} where id = #{billId}")
+    void updateBillStatusStartAndOperatorByBillId(@Param("billId") String billId, @Param("userUid") Integer userUid);
+
+    /**
+     * 刷新处理状态
+     *
+     * @param billId 工单ID
+     * @param billStatus 账单状态
+     */
+    @Update("update lana_mall_bill set bill_status = #{billStatus}  where id = #{billId}")
+    void updateBillStatusByBillId(@Param("billId") String billId, @Param("billStatus") int billStatus);
 }

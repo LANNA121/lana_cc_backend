@@ -3,18 +3,22 @@ package com.lana.cc.backend.service.impl;
 import java.util.UUID;
 
 import com.lana.cc.backend.dao.AccountBookDao;
+import com.lana.cc.backend.dao.AccountDao;
 import com.lana.cc.backend.dao.AddressDao;
 import com.lana.cc.backend.dao.MallDao;
 import com.lana.cc.backend.pojo.enums.RoleEnum;
 import com.lana.cc.backend.pojo.po.AccountAddressPO;
+import com.lana.cc.backend.pojo.po.AccountPO;
 import com.lana.cc.backend.pojo.po.GoodsPO;
 import com.lana.cc.backend.pojo.po.MallBillPO;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
 import com.lana.cc.backend.pojo.vo.req.GoodsDetailReq;
+import com.lana.cc.backend.pojo.vo.req.HandlerBillReq;
 import com.lana.cc.backend.pojo.vo.req.ModifyGoodsDetailReq;
 import com.lana.cc.backend.pojo.vo.req.RedeemGiftReq;
 import com.lana.cc.backend.pojo.vo.rsp.GoodsListRsp;
+import com.lana.cc.backend.pojo.vo.rsp.MallAllBillRsp;
 import com.lana.cc.backend.service.MallService;
 import com.lana.cc.backend.utils.HttpUtil;
 import com.lana.cc.backend.utils.ObjectUtil;
@@ -37,11 +41,17 @@ import java.util.List;
 public class MallServiceImpl implements MallService {
 
     @Resource
+    AccountDao accountDao;
+    @Resource
     MallDao mallDao;
     @Resource
     AddressDao addressDao;
     @Resource
     AccountBookDao accountBookDao;
+
+    private static final int START = 1;
+    private static final int SEND = 2;
+    private static final int END = 3;
 
     @Override
     public ServiceResponseMessage fetchAllEnableGoodsDetails() {
@@ -116,7 +126,7 @@ public class MallServiceImpl implements MallService {
         if (null == goodsInfo || goodsInfo.getTotal() <= 0) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.GOODS_NO_FIND_OR_DISABLE, "商品不存在或兑换结束");
         }
-        AccountAddressPO address = addressDao.selectAccountAddressByUidAndAddressId(redeemGiftReq.getAddressId(), HttpUtil.getUserUid());
+        AccountAddressPO address = addressDao.selectAccountAddressByAddressId(redeemGiftReq.getAddressId());
         if (null == address) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.ADDR_NO_FIND_OR_DISABLE, "用户地址不存在");
         }
@@ -133,11 +143,65 @@ public class MallServiceImpl implements MallService {
 
     @Override
     public ServiceResponseMessage fetchAllBillByUid(Integer uid) {
-        if(!ObjectUtil.isNotEmpty(uid)){
+        if (!ObjectUtil.isNotEmpty(uid)) {
             uid = HttpUtil.getUserUid();
         }
-        // todo MallBillPO 查询
         List<MallBillPO> mallBillList = mallDao.selectAllBillDetailsByUid(uid);
-        return ServiceResponseMessage.createBySuccessCodeMessage("查询成功",mallBillList);
+        return buildMallBillResponseMessage(mallBillList);
+    }
+
+    @Override
+    public ServiceResponseMessage fetchAllOssBill() {
+        List<MallBillPO> mallBillList = mallDao.selectAllBillDetails();
+        return buildMallBillResponseMessage(mallBillList);
+    }
+
+    @Override
+    public ServiceResponseMessage handlerAccountBill(HandlerBillReq handlerBillReq) {
+        if(null == handlerBillReq){
+            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.PARAMETER_IS_EMPTY, "参数错误");
+        }
+        if(handlerBillReq.getBillStatus() != END){
+            if(HttpUtil.getRole() == RoleEnum.USER ){
+                return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.UNAUTHORIZED_CHANGE, "不允许的操作");
+            }
+        }
+        if(handlerBillReq.getBillStatus() == SEND && !ObjectUtil.isNotEmpty(handlerBillReq.getTrackId())){
+            return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.PARAMETER_IS_EMPTY, "需要单号");
+        }
+        if(handlerBillReq.getBillStatus() == START){
+            mallDao.updateBillStatusStartAndOperatorByBillId(handlerBillReq.getBillId(),HttpUtil.getUserUid());
+        }else {
+            mallDao.updateBillStatusByBillId(handlerBillReq.getBillId(),handlerBillReq.getBillStatus());
+        }
+        return ServiceResponseMessage.createBySuccessCodeMessage("处理成功");
+    }
+
+    private ServiceResponseMessage buildMallBillResponseMessage(List<MallBillPO> mallBillList) {
+        MallAllBillRsp mallAllBillRsp = new MallAllBillRsp();
+        if (null != mallBillList) {
+            List<MallAllBillRsp.Bill> billList = new ArrayList<>();
+            mallBillList.forEach(mallBill -> {
+                MallAllBillRsp.Bill bill = new  MallAllBillRsp.Bill();
+                BeanUtils.copyProperties(mallBill,bill);
+                GoodsPO goodsPO = mallDao.selectGoodsDetailByGoodsId(mallBill.getGoodsId());
+                MallAllBillRsp.Goods goods = new MallAllBillRsp.Goods();
+                BeanUtils.copyProperties(goodsPO,goods);
+                bill.setGoodsDetail(goods);
+                MallAllBillRsp.Address address = new  MallAllBillRsp.Address();
+                AccountAddressPO accountAddress = addressDao.selectAccountAddressByAddressId(mallBill.getAddressId());
+                BeanUtils.copyProperties(accountAddress,address);
+                bill.setAddressDetail(address);
+                AccountPO accountInfo = accountDao.selectAccountInfoByUid(mallBill.getOperator());
+                MallAllBillRsp.User user = new MallAllBillRsp.User();
+                if(null != accountInfo){
+                    BeanUtils.copyProperties(accountInfo,user);
+                }
+                bill.setOperatorInfo(user);
+                billList.add(bill);
+            });
+            mallAllBillRsp.setBills(billList);
+        }
+        return ServiceResponseMessage.createBySuccessCodeMessage("查询成功", mallAllBillRsp);
     }
 }

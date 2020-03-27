@@ -40,14 +40,24 @@ public class AddressRsp {
         private String phone;
 
         /**
-         * 收件人地址
+         * 省
          */
-        private String address;
+        private String state;
 
         /**
-         * 收件人房间号及地址补充
+         * 城市
          */
-        private String house;
+        private String city;
+
+        /**
+         * 行政街道
+         */
+        private String district;
+
+        /**
+         * 收件人门牌号
+         */
+        private String street;
 
         /**
          * 地址条数状态
@@ -86,20 +96,36 @@ public class AddressRsp {
             this.phone = phone;
         }
 
-        public String getAddress() {
-            return address;
+        public String getState() {
+            return state;
         }
 
-        public void setAddress(String address) {
-            this.address = address;
+        public void setState(String state) {
+            this.state = state;
         }
 
-        public String getHouse() {
-            return house;
+        public String getCity() {
+            return city;
         }
 
-        public void setHouse(String house) {
-            this.house = house;
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getDistrict() {
+            return district;
+        }
+
+        public void setDistrict(String district) {
+            this.district = district;
+        }
+
+        public String getStreet() {
+            return street;
+        }
+
+        public void setStreet(String street) {
+            this.street = street;
         }
 
         public int getStatus() {

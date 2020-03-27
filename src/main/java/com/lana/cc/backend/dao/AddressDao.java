@@ -29,8 +29,8 @@ public interface AddressDao {
      * @param addressEntity 用户地址相关信息
      */
 
-    @Insert("insert into lana_account_addr(uid, name, phone, address, house, status) " +
-            "VALUES(#{addressEntity.uid},#{addressEntity.name},#{addressEntity.phone},#{addressEntity.address},#{addressEntity.house},0) ")
+    @Insert("insert into lana_account_addr(uid, name, phone,state,city,district,street, status) " +
+            "VALUES(#{addressEntity.uid},#{addressEntity.name},#{addressEntity.phone},#{addressEntity.state},#{addressEntity.city},#{addressEntity.district},#{addressEntity.street},0) ")
     void insertNewAddress(@Param("addressEntity") AccountAddressPO addressEntity);
 
     /**
@@ -43,12 +43,11 @@ public interface AddressDao {
     void deleteAddressByIdAndUid(@Param("addressId") int addressId, @Param("uid") Integer uid);
 
     /**
-     * 查询用户地址信息 根据用户Uid和地址相关ID
+     * 查询用户地址信息 根据地址相关ID
      *
      * @param addressId 用户地址ID
-     * @param userUid   用户uid
      * @return 查询到的兑换结果
      */
-    @Select("select * from lana_account_addr where id=#{addressId} and uid = #{uid} ")
-    AccountAddressPO selectAccountAddressByUidAndAddressId(@Param("addressId") int addressId, @Param("userUid") Integer userUid);
+    @Select("select * from lana_account_addr where id=#{addressId}")
+    AccountAddressPO selectAccountAddressByAddressId(@Param("addressId") int addressId);
 }

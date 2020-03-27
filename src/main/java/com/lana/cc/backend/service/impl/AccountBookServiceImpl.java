@@ -36,14 +36,15 @@ public class AccountBookServiceImpl implements AccountBookService {
 
     @Override
     public ServiceResponseMessage redeemCoins(RedeemCoinsReq redeemCoinsReq) {
-        if (null != redeemCoinsReq && redeemCoinsReq.getCheckKey().equals(
-                Md5Util.encodeByMd5(
-                        redeemCoinsReq.getLanaId(),
-                        String.format("%s%s", redeemCoinsReq.getPoint(), redeemCoinsReq.getSource()), HttpUtil.getUserUid()))
-        ) {
-            // 增加兑换记录
-            accountBookDao.insertAccountBookAchieve(HttpUtil.getUserUid(), redeemCoinsReq.getLanaId(), redeemCoinsReq.getPoint(), String.format("%s 兑换", redeemCoinsReq.getSource()));
-            return ServiceResponseMessage.createBySuccessCodeMessage("兑换成功");
+        if(null != redeemCoinsReq ){
+            String passKey =    Md5Util.encodeByMd5(
+                    redeemCoinsReq.getLanaId(),
+                    String.format("%s%s", redeemCoinsReq.getPoint(), redeemCoinsReq.getSource()), HttpUtil.getUserUid());
+            if (redeemCoinsReq.getCheckKey().equals(passKey)) {
+                // 增加兑换记录
+                accountBookDao.insertAccountBookAchieve(HttpUtil.getUserUid(), redeemCoinsReq.getLanaId(), redeemCoinsReq.getPoint(), String.format("%s 兑换", redeemCoinsReq.getSource()));
+                return ServiceResponseMessage.createBySuccessCodeMessage("兑换成功");
+            }
         }
         return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.BAD_REQUEST, "兑换失败");
     }
@@ -68,5 +69,13 @@ public class AccountBookServiceImpl implements AccountBookService {
             accountBookHistoryRsp.setAccountBooks(accountBookList);
             return ServiceResponseMessage.createBySuccessCodeMessage("拉取成功",accountBookHistoryRsp);
         }
+    }
+
+    @Override
+    public ServiceResponseMessage fetchAccountBookCoinsByUid(Integer uid) {
+        if (!ObjectUtil.isNotEmpty(uid)) {
+            uid = HttpUtil.getUserUid();
+        }
+        return ServiceResponseMessage.createBySuccessCodeMessage("拉取成功",fetchAccountRemainingPointsByUid(uid));
     }
 }
