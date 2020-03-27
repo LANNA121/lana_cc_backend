@@ -4127,6 +4127,3 @@ INSERT INTO `lana_garbage_search` VALUES ('绿豆包装', 4);
 INSERT INTO `lana_garbage_search` VALUES ('绿豆沙', 3);
 INSERT INTO `lana_garbage_search` VALUES ('绿豆糕', 3);
 INSERT INTO `lana_garbage_search` VALUES ('绿豆芽', 3);
-INSERT INTO `lana_garbage_search` VALUES (NULL, NULL);
-INSERT INTO `lana_garbage_search` VALUES (NULL, NULL);
-INSERT INTO `lana_garbage_search` VALUES (NULL, NULL);
