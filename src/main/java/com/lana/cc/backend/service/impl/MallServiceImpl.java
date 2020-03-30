@@ -186,19 +186,26 @@ public class MallServiceImpl implements MallService {
             mallBillList.forEach(mallBill -> {
                 MallAllBillRsp.Bill bill = new  MallAllBillRsp.Bill();
                 BeanUtils.copyProperties(mallBill,bill);
-                GoodsPO goodsPO = mallDao.selectGoodsDetailByGoodsId(mallBill.getGoodsId());
+                GoodsPO goodsInfo = mallDao.selectGoodsDetailByGoodsId(mallBill.getGoodsId());
                 MallAllBillRsp.Goods goods = new MallAllBillRsp.Goods();
-                BeanUtils.copyProperties(goodsPO,goods);
+                BeanUtils.copyProperties(goodsInfo,goods);
                 bill.setGoodsDetail(goods);
                 MallAllBillRsp.Address address = new  MallAllBillRsp.Address();
                 AccountAddressPO accountAddress = addressDao.selectAccountAddressByAddressId(mallBill.getAddressId());
                 BeanUtils.copyProperties(accountAddress,address);
                 bill.setAddressDetail(address);
+                AccountPO userInfo = accountDao.selectAccountInfoByUid(mallBill.getUid());
+                MallAllBillRsp.User userDetailInfo = new MallAllBillRsp.User();
+                if(null != userInfo){
+                    BeanUtils.copyProperties(userInfo,userDetailInfo);
+                }
+                bill.setUserInfo(userDetailInfo);
                 AccountPO accountInfo = accountDao.selectAccountInfoByUid(mallBill.getOperator());
                 MallAllBillRsp.User user = new MallAllBillRsp.User();
                 if(null != accountInfo){
                     BeanUtils.copyProperties(accountInfo,user);
                 }
+                user.setUserName(null);
                 bill.setOperatorInfo(user);
                 billList.add(bill);
             });

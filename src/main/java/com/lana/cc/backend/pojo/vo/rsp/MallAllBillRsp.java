@@ -1,5 +1,8 @@
 package com.lana.cc.backend.pojo.vo.rsp;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class MallAllBillRsp {
@@ -23,6 +26,12 @@ public class MallAllBillRsp {
          * 账单所有人的ID
          */
         private Integer uid;
+
+
+        /**
+         * 账单所有人的ID
+         */
+        private User userInfo;
 
         /**
          * 账单兑换的商品ID
@@ -129,6 +138,14 @@ public class MallAllBillRsp {
 
         public void setStatus(Integer status) {
             this.status = status;
+        }
+
+        public User getUserInfo() {
+            return userInfo;
+        }
+
+        public void setUserInfo(User userInfo) {
+            this.userInfo = userInfo;
         }
     }
 
@@ -258,6 +275,9 @@ public class MallAllBillRsp {
         private String nikeName;
         private String avatar;
 
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private String userName;
+
         public int getId() {
             return id;
         }
@@ -280,6 +300,14 @@ public class MallAllBillRsp {
 
         public void setAvatar(String avatar) {
             this.avatar = avatar;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
         }
     }
 
@@ -330,6 +358,8 @@ public class MallAllBillRsp {
         public void setGoodsDescription(String goodsDescription) {
             this.goodsDescription = goodsDescription;
         }
+
+
     }
 
 }
