@@ -1,10 +1,7 @@
 package com.lana.cc.backend.service;
 
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
-import com.lana.cc.backend.pojo.vo.req.AddressReq;
-import com.lana.cc.backend.pojo.vo.req.LoginReq;
-import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
-import com.lana.cc.backend.pojo.vo.req.RegisterReq;
+import com.lana.cc.backend.pojo.vo.req.*;
 import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
 
 /**
@@ -103,4 +100,12 @@ public interface AccountService {
      * @return 返回用户账号删除的处理状态
      */
     ServiceResponseMessage deleteAccountProfileByUid(Integer uid);
+
+    /**
+     * 修改用户的
+     *
+     * @param modifyAccountPasswordReq 修改用户密码
+     * @return 密码修改的处理结果
+     */
+    ServiceResponseMessage modifyAccountPassword(ModifyAccountPasswordReq modifyAccountPasswordReq);
 }

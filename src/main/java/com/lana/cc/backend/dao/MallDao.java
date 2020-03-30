@@ -150,9 +150,18 @@ public interface MallDao {
     /**
      * 刷新处理状态
      *
-     * @param billId 工单ID
+     * @param billId     工单ID
      * @param billStatus 账单状态
      */
     @Update("update lana_mall_bill set bill_status = #{billStatus}  where id = #{billId}")
     void updateBillStatusByBillId(@Param("billId") String billId, @Param("billStatus") int billStatus);
+
+    /**
+     * 填写快递ID
+     *
+     * @param billId  billId
+     * @param trackId 工单ID
+     */
+    @Update("update lana_mall_bill set bill_status = 2,track_id = #{trackId} where id = #{billId} and bill_status = 1")
+    void updateBillStatusAndTrackIdByBillId(@Param("billId") String billId, @Param("trackId") String trackId);
 }

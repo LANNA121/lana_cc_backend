@@ -113,4 +113,13 @@ public interface AccountDao {
      */
     @Delete("delete from lana_account where uid = #{uid} limit 1")
     void deleteAccountProfileByUid(@Param("uid") Integer uid);
+
+    /**
+     * 更新用户密码
+     *
+     * @param uid      用户uid
+     * @param password 用户密码
+     */
+    @Update("update lana_account set password = #{password} where uid =  #{uid}")
+    void updateAccountPasswordByUid(@Param("uid") Integer uid, @Param("password") String password);
 }

@@ -171,6 +171,8 @@ public class MallServiceImpl implements MallService {
         }
         if(handlerBillReq.getBillStatus() == START){
             mallDao.updateBillStatusStartAndOperatorByBillId(handlerBillReq.getBillId(),HttpUtil.getUserUid());
+        } else if(handlerBillReq.getBillStatus() == SEND && ObjectUtil.isNotEmpty(handlerBillReq.getTrackId())){
+            mallDao.updateBillStatusAndTrackIdByBillId(handlerBillReq.getBillId(),handlerBillReq.getTrackId());
         }else {
             mallDao.updateBillStatusByBillId(handlerBillReq.getBillId(),handlerBillReq.getBillStatus());
         }

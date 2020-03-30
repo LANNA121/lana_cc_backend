@@ -20,7 +20,7 @@ public interface AddressDao {
      * @param uid 用户UID
      * @return 查询到的用户地址信息
      */
-    @Select("select * from lana_account_addr where uid = #{uid}")
+    @Select("select * from lana_account_addr where uid = #{uid} and status = 0")
     List<AccountAddressPO> selectAccountAddressByUid(@Param("uid") int uid);
 
     /**
@@ -39,7 +39,7 @@ public interface AddressDao {
      * @param addressId 用户地址信息
      * @param uid       用户uid
      */
-    @Delete("delete from lana_account_addr where id=#{addressId} and uid = #{uid}")
+    @Update("update lana_account_addr set status = -1 where id=#{addressId} and uid = #{uid}")
     void deleteAddressByIdAndUid(@Param("addressId") int addressId, @Param("uid") Integer uid);
 
     /**

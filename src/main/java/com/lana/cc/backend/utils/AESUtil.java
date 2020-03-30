@@ -98,8 +98,8 @@ public class AESUtil {
 
     public static void main(String[] args) {
         String content = "Password"; // 待加密的字符串
-        String passcode = encryptAES("UDDDD",content);
+        String passcode = encryptAES("09698636-b381-4033-83b3-b09bd2773ca8",content);
         System.out.println(passcode);
-        System.out.println(decryptAES("UDDDD",passcode));
+        System.out.println(decryptAES("09698636-b381-4033-83b3-b09bd2773ca8",passcode));
     }
 }

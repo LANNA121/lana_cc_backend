@@ -1,5 +1,7 @@
 package com.lana.cc.backend.pojo.vo.rsp;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * @author Leo Wang
  * @version 1.0
@@ -19,6 +21,9 @@ public class UserProfileRsp {
     private Long createTime;
     private Long updateTime;
     private String role;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String password = null;
 
     public Integer getUid() {
         return uid;
@@ -114,6 +119,14 @@ public class UserProfileRsp {
 
     public void setCoins(Long coins) {
         this.coins = coins;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {

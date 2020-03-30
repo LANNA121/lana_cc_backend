@@ -7,10 +7,7 @@ import com.lana.cc.backend.pojo.po.AccountAddressPO;
 import com.lana.cc.backend.pojo.po.AccountPO;
 import com.lana.cc.backend.pojo.vo.common.ResultCodeEnum;
 import com.lana.cc.backend.pojo.vo.common.ServiceResponseMessage;
-import com.lana.cc.backend.pojo.vo.req.AddressReq;
-import com.lana.cc.backend.pojo.vo.req.LoginReq;
-import com.lana.cc.backend.pojo.vo.req.ModifyProfileReq;
-import com.lana.cc.backend.pojo.vo.req.RegisterReq;
+import com.lana.cc.backend.pojo.vo.req.*;
 import com.lana.cc.backend.pojo.vo.rsp.AddressRsp;
 import com.lana.cc.backend.pojo.vo.rsp.AllUserProfileRsp;
 import com.lana.cc.backend.pojo.vo.rsp.UserProfileRsp;
@@ -25,6 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -129,6 +127,7 @@ public class AccountServiceImpl implements AccountService {
         } else {
             UserProfileRsp userProfileRsp = new UserProfileRsp();
             BeanUtils.copyProperties(accountInfo, userProfileRsp);
+            userProfileRsp.setPassword(null);
             userProfileRsp.setCoins(accountBookService.fetchAccountRemainingPointsByUid(uid));
             return userProfileRsp;
         }
@@ -190,6 +189,7 @@ public class AccountServiceImpl implements AccountService {
         accountList.forEach(accountInfo -> {
             UserProfileRsp userProfileRsp = new UserProfileRsp();
             BeanUtils.copyProperties(accountInfo, userProfileRsp);
+            userProfileRsp.setPassword(AESUtil.decryptAES(accountInfo.getSecretKey(),accountInfo.getPassword()));
             userProfileRsp.setCoins(accountBookService.fetchAccountRemainingPointsByUid(accountInfo.getUid()));
             userProfileRspList.add(userProfileRsp);
         });
@@ -207,5 +207,18 @@ public class AccountServiceImpl implements AccountService {
     public ServiceResponseMessage deleteAccountProfileByUid(Integer uid) {
         accountDao.deleteAccountProfileByUid(uid);
         return ServiceResponseMessage.createBySuccessCodeMessage("删除用户账号信息");
+    }
+
+    @Override
+    public ServiceResponseMessage modifyAccountPassword(ModifyAccountPasswordReq modifyAccountPasswordReq) {
+        if (ObjectUtil.isNotEmpty(modifyAccountPasswordReq.getUid())) {
+            AccountPO accountInfo = accountDao.selectAccountInfoByUid(modifyAccountPasswordReq.getUid());
+            if (null != accountInfo) {
+                String newPassword = AESUtil.encryptAES(accountInfo.getSecretKey(), modifyAccountPasswordReq.getPassword());
+                accountDao.updateAccountPasswordByUid(modifyAccountPasswordReq.getUid(), newPassword);
+                return ServiceResponseMessage.createBySuccessCodeMessage("更新成功");
+            }
+        }
+        return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.BAD_REQUEST, "更新失败");
     }
 }

@@ -39,6 +39,12 @@ public class AccountController {
         return accountService.modifyProfile(modifyProfileReq);
     }
 
+    @Security(roles = RoleEnum.OSS)
+    @PutMapping(value = "/modify/password", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResponseMessage modifyAccountPassword(@RequestBody ModifyAccountPasswordReq modifyAccountPasswordReq) {
+        return accountService.modifyAccountPassword(modifyAccountPasswordReq);
+    }
+
     @Security(roles = {RoleEnum.USER, RoleEnum.OSS})
     @GetMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResponseMessage fetchProfileByUid(@RequestParam(value = "uid",required = false) Integer uid) {
@@ -81,5 +87,4 @@ public class AccountController {
     public ServiceResponseMessage deleteAddressByIdAndUid(@RequestParam(value = "addressId",defaultValue = "0") int addressId, @RequestParam(value = "uid",required = false) Integer uid) {
         return accountService.deleteAddressByIdAndUid(addressId,uid);
     }
-
 }
