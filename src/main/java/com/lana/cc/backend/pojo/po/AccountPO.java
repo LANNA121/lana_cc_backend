@@ -11,6 +11,7 @@ public class AccountPO {
     private Integer uid;
     private String role;
     private String userName;
+    private String secretKey;
     private String password;
     private Long birthday;
     private String nikeName;
@@ -124,6 +125,14 @@ public class AccountPO {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
     @Override

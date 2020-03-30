@@ -40,12 +40,12 @@ public interface AccountDao {
      */
     @Insert("insert into " +
             "lana_account " +
-            "(role,user_name,password," +
+            "(role,user_name,secret_key,password," +
             " nike_name,gender,avatar," +
             " create_time,update_time) " +
             "values" +
             "(" +
-            "#{accountInfo.role},#{accountInfo.userName},#{accountInfo.password}," +
+            "#{accountInfo.role},#{accountInfo.userName},#{accountInfo.secretKey},#{accountInfo.password}," +
             "#{accountInfo.nikeName},#{accountInfo.gender},#{accountInfo.avatar}," +
             "#{accountInfo.createTime},#{accountInfo.createTime}" +
             ")")
